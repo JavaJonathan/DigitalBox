@@ -35,8 +35,8 @@ function App() {
       {signedIn ? (
         <Fragment>
           <NavBar />
-          <Search />
-          <ContentTable pdfItems={pdfItems} />
+          <Search pdfItems={pdfItems} />
+          <ContentTable pdfItems={pdfItems} setPdfItems={setPdfItems} />
           <button onClick={handleGetFiles}> Get Files</button>
           <button onClick={handleGetFileContent}> Download File</button>
         </Fragment>

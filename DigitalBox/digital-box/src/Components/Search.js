@@ -8,7 +8,7 @@ import Stack from "@mui/material/Stack";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
 
-const Search = () => {
+const Search = (props) => {
   return (
     <Fragment>
       <InputLabel
@@ -26,7 +26,7 @@ const Search = () => {
         }
         sx={{ width: "30%" }}
       />
-      <Stack direction="row" align="right" spacing={2} sx={{ ml: "3%" }}>
+      <Stack direction="row" align="right" spacing={2} sx={{ ml: "3%", pt: '3%'}}>
         <Button
           variant="contained"
           endIcon={<CancelScheduleSendIcon />}
@@ -41,6 +41,7 @@ const Search = () => {
         >
           Ship
         </Button>
+        <span style={{'display': 'flex', 'align-items': 'center'}}>{props.pdfItems.filter(item => item.Checked !== false).length} item(s) checked.</span>
       </Stack>
     </Fragment>
   );

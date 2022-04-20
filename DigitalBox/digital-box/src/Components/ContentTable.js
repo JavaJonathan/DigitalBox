@@ -10,8 +10,12 @@ import CheckIcon from "@mui/icons-material/Check";
 import ToggleButton from "@mui/material/ToggleButton";
 
 const ContentTable = (props) => {
-  const [selected, setSelected] = useState(false);
-  const [selectedCount, setSelectedCount] = useState(0);
+
+  const handleSelected = event => {
+    let selectedItem = props.pdfItems.find(item => item.FileId === event.target.value)
+    selectedItem.Checked = !selectedItem.Checked
+    props.setPdfItems([...props.pdfItems])
+  }
 
   return (
     <TableContainer
@@ -66,11 +70,9 @@ const ContentTable = (props) => {
                     >
                       <ToggleButton
                         value={row.FileId}
-                        selected={selected}
-                        color={selected ? "success" : "standard"}
-                        onChange={() => {
-                          setSelected(!selected);
-                        }}
+                        selected={row.Checked}
+                        color={row.Checked ? "success" : "standard"}
+                        onClick={handleSelected}
                         size="small"
                       >
                         <CheckIcon />
