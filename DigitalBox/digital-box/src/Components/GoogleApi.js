@@ -12,6 +12,7 @@ export function getGoogleCredentials(setCredentialsLoaded) {
     response.json().then((r) => {
       credentials = r;
       setCredentialsLoaded(true);
+      console.log(credentials);
     })
   );
 }
@@ -71,11 +72,11 @@ export function execute() {
     );
 }
 
-export async function getFileContent(pdfItems, setPdfItems) {
+export async function getFileContent(setPdfItems, setMessage) {
   let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
   let responseBody = "";
 
-  fetch("http://localhost:2020/", {
+  await fetch("http://localhost:2020/", {
     method: "POST",
     headers: {
       "content-type": "text/plain",
@@ -86,7 +87,8 @@ export async function getFileContent(pdfItems, setPdfItems) {
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      setPdfItems(JSON.parse(responseBody));
-      console.log(pdfItems);
+      console.log(responseBody);
+      setMessage(responseBody.Message);
+      setPdfItems(responseBody.Orders);
     });
 }

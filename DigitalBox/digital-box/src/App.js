@@ -2,6 +2,7 @@ import "./App.css";
 import React, { Fragment, useEffect, useState } from "react";
 import * as GoogleApi from "./Components/GoogleApi";
 import NavBar from "./Components/NavBar";
+import AlertUI from "./Components/Alert";
 import ContentTable from "./Components/ContentTable";
 import GoogleIcon from "@mui/icons-material/Google";
 import Button from "@mui/material/Button";
@@ -13,20 +14,18 @@ function App() {
   const [pdfItems, setPdfItems] = useState([]);
   const [credentialsLoaded, setCredentialsLoaded] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => GoogleApi.getGoogleCredentials(setCredentialsLoaded), []);
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
+  useEffect(() => GoogleApi.getFileContent(setPdfItems, setMessage, searchValue), [searchValue]);
 
   const handleLogin = () => {
     GoogleApi.authenticate(setSignedIn);
   };
 
-  const handleGetFiles = () => {
-    GoogleApi.execute();
-  };
-
-  const handleGetFileContent = () => {
-    GoogleApi.getFileContent(pdfItems, setPdfItems);
+  const handleGetFileContent = async () => {
+    await GoogleApi.getFileContent(setPdfItems, setMessage);
   };
 
   return (
@@ -35,10 +34,12 @@ function App() {
       {signedIn ? (
         <Fragment>
           <NavBar />
-          <Search pdfItems={pdfItems} />
+          {message !== "" ? <AlertUI propMessage={message} /> : null}
+          <Search
+            pdfItems={pdfItems}
+            getContent={handleGetFileContent}
+          />
           <ContentTable pdfItems={pdfItems} setPdfItems={setPdfItems} />
-          <button onClick={handleGetFiles}> Get Files</button>
-          <button onClick={handleGetFileContent}> Download File</button>
         </Fragment>
       ) : (
         <div
