@@ -67,7 +67,7 @@ const ContentTable = (props) => {
         </TableHead>
         <TableBody>
           {props.pdfItems.map((row) =>
-            row.FileContents.map((item) => (
+            row.FileContents.map((item, index) => (
               <TableRow>
                 {row.FileContents[0].Title === item.Title ? (
                   <TableCell
@@ -77,6 +77,7 @@ const ContentTable = (props) => {
                     sx={{
                       bgcolor: row.Checked ? "#c7f7d4" : "",
                       borderColor: "darkgray",
+                      pl: '1vh'
                     }}
                   >
                     <div
@@ -89,7 +90,9 @@ const ContentTable = (props) => {
                         onClick={handleSelected}
                         size="small"
                       >
-                        <CheckIcon />
+                        <CheckIcon onClick={handleSelected}
+                        value={row.FileId}
+                        />
                       </ToggleButton>
                     </div>
                     {row.FileContents[0].OrderNumber}
@@ -97,28 +100,26 @@ const ContentTable = (props) => {
                 ) : null}
                 <TableCell
                   style={{
-                    padding: "1px",
                     "word-break": "break-word",
                     "background-color": "#f5f1f1",
                     borderColor: "darkgray",
                   }}
-                  sx={{ maxWidth: "70vh" }}
+                  sx={{
+                  p: '1vh' }}
                 >
-                  {item.Title}
+                  <span style={{'fontWeight': 'bold'}}>{`${++index}.`}&nbsp;</span>{`${item.Title}`}
                 </TableCell>
                 <TableCell
                   align="center"
-                  style={{ padding: 0 }}
                   sx={{ borderColor: "darkgray" }}
                 >
                   {item.Quantity}
                 </TableCell>
                 <TableCell
                   align="center"
-                  style={{ padding: 0 }}
                   sx={{
                     borderColor: "darkgray",
-                    "background-color": "#f5f1f1",
+                    "background-color": "#f5f1f1"
                   }}
                 >
                   {item.ShipDate}

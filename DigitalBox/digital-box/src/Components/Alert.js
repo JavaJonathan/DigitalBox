@@ -13,10 +13,20 @@ const AlertUI = (props) => {
       setUiMessage(
         `Your search results are up to date as of ${new Date().toLocaleString()}`
       );
-    } else {
+    } else if(props.propMessage.includes("files missing from DB")) {
       setSeverityState("warning");
       setOpen(true);
+      setUiMessage(
+        'Your search results are not up to date. Updating...'
+      );
     }
+    else if(props.propMessage.includes("successfully")) {
+        setSeverityState("success");
+        setOpen(true);
+        setUiMessage(
+          props.propMessage
+        );
+      }
   }, [props.propMessage]);
 
   return open ? (

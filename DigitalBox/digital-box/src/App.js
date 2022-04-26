@@ -43,6 +43,7 @@ function App() {
             getContent={handleGetFileContent}
             setPdfItems={setPdfItems}
             setSearchValue={setSearchValue}
+            setMessage={setMessage}
           />
           <ContentTable pdfItems={pdfItems} setPdfItems={setPdfItems} />
         </Fragment>

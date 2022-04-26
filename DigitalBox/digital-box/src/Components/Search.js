@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
 import SendIcon from "@mui/icons-material/Send";
+import * as GoogleApi from "./GoogleApi";
 
 const Search = (props) => {
   const [searchText, setSearchText] = useState("");
@@ -16,6 +17,18 @@ const Search = (props) => {
 
   const handleSearchClick = () => {
     props.setSearchValue(searchText);
+  };
+
+  const handleCancelClick = async () => {
+    let orders = props.pdfItems.filter((item) => item.Checked !== false)
+
+    if(orders.length < 1) return
+
+    let cancelledIds = []
+    orders.forEach(order => {
+        cancelledIds.push(order.FileId)
+    })
+    await GoogleApi.cancelOrders(props.setPdfItems, props.setMessage, cancelledIds)
   };
 
   return (
@@ -60,6 +73,7 @@ const Search = (props) => {
           variant="contained"
           endIcon={<CancelScheduleSendIcon />}
           sx={{ bgcolor: "red", fontWeight: "bold", borderRadius: "10px" }}
+          onClick={handleCancelClick}
         >
           Cancel
         </Button>

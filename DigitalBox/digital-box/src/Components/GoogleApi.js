@@ -55,22 +55,30 @@ export const InitializeGoogleDrive = () =>
     gapi.auth2.init({ client_id: credentials.ClientId });
   });
 
-// Make sure the client is loaded and sign-in is complete before calling this method.
-export function execute() {
-  return gapi.client.drive.files
-    .list({
-      q: "parents='1_-sgosO7Pyq5b5ofxrD7z1Bb5uck8q8Z'",
-    })
-    .then(
-      function (response) {
-        // Handle the results here (response.result has the parsed body).
-        console.log("Response", response.result);
+  export async function cancelOrders(setPdfItems, setMessage, orders) {
+    let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
+    let responseBody = "";
+  
+    await fetch("http://localhost:2020/cancel", {
+      method: "POST",
+      headers: {
+        "content-type": "text/plain",
       },
-      function (err) {
-        console.error("Execute error", err);
-      }
-    );
-}
+      body: JSON.stringify({
+        token: {
+          access_token: token.access_token,
+        },
+        Orders: orders,
+        Action: 'cancel',
+      }),
+    })
+      .then((response) => response.json().then((r) => (responseBody = r)))
+      .then(() => {
+        console.log(responseBody);
+        setMessage(responseBody.Message);
+        setPdfItems(responseBody.Orders);
+      });
+  }
 
 export async function getFileContent(setPdfItems, setMessage, searchValue) {
   let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
