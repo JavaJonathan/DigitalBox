@@ -72,7 +72,7 @@ export function execute() {
     );
 }
 
-export async function getFileContent(setPdfItems, setMessage) {
+export async function getFileContent(setPdfItems, setMessage, searchValue) {
   let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
   let responseBody = "";
 
@@ -82,7 +82,10 @@ export async function getFileContent(setPdfItems, setMessage) {
       "content-type": "text/plain",
     },
     body: JSON.stringify({
-      access_token: token.access_token,
+      token: {
+        access_token: token.access_token,
+      },
+      Filter: searchValue,
     }),
   })
     .then((response) => response.json().then((r) => (responseBody = r)))

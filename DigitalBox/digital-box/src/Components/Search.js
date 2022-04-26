@@ -10,28 +10,13 @@ import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
 import SendIcon from "@mui/icons-material/Send";
 
 const Search = (props) => {
-    const [searchValue, setSearchValue] = useState('')
-
-  const inputValue = useRef(null);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => props.getContent(), []);
-  useEffect(() => {
-    props.getContent()
-  }, [searchValue])
 
   const handleSearchClick = () => {
-    setSearchValue(inputValue.target.value)
+    props.setSearchValue(searchText);
   };
-
-  //   const hasSearchParam = (item) => {
-  //       let found = false
-  //       item.FileContents.forEach(content => {
-  //             if( content.Title.includes(searchValue) || content.OrderNumber.includes(searchValue) ){
-  //                 found = true
-  //             }
-  //         })
-  //         return found
-  //   }
 
   return (
     <Fragment>
@@ -54,7 +39,8 @@ const Search = (props) => {
           </InputAdornment>
         }
         sx={{ width: "50%" }}
-        ref={inputValue}
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
       />
       <Button
         onClick={handleSearchClick}

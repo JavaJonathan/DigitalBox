@@ -15,17 +15,18 @@ function App() {
   const [credentialsLoaded, setCredentialsLoaded] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [message, setMessage] = useState("");
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => GoogleApi.getGoogleCredentials(setCredentialsLoaded), []);
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
-  useEffect(() => GoogleApi.getFileContent(setPdfItems, setMessage, searchValue), [searchValue]);
+  useEffect(() => handleGetFileContent(), [searchValue]);
 
   const handleLogin = () => {
     GoogleApi.authenticate(setSignedIn);
   };
 
-  const handleGetFileContent = async () => {
-    await GoogleApi.getFileContent(setPdfItems, setMessage);
+  const handleGetFileContent = () => {
+    GoogleApi.getFileContent(setPdfItems, setMessage, searchValue);
   };
 
   return (
@@ -34,10 +35,14 @@ function App() {
       {signedIn ? (
         <Fragment>
           <NavBar />
-          {message !== "" ? <AlertUI propMessage={message} /> : null}
+          {message !== "" ? (
+            <AlertUI propMessage={message} setMessage={setMessage} />
+          ) : null}
           <Search
             pdfItems={pdfItems}
             getContent={handleGetFileContent}
+            setPdfItems={setPdfItems}
+            setSearchValue={setSearchValue}
           />
           <ContentTable pdfItems={pdfItems} setPdfItems={setPdfItems} />
         </Fragment>
