@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "../App.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,8 +9,13 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import CheckIcon from "@mui/icons-material/Check";
 import ToggleButton from "@mui/material/ToggleButton";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const ContentTable = (props) => {
+  const [page, setPage] = useState(1)
+  const [pageCount, setPageCount] = useState(1)
+
   const handleSelected = (event) => {
     let selectedItem = props.pdfItems.find(
       (item) => item.FileId === event.target.value
@@ -19,7 +24,28 @@ const ContentTable = (props) => {
     props.setPdfItems([...props.pdfItems]);
   };
 
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  useEffect(() => {
+    getAmountOfPages()
+    setPage(1)
+  }, [props.pdfItems])
+
+  const getAmountOfPages = () => {
+    let pages = 0
+    if(props.pdfItems.length % 25 > 0){
+      pages = (props.pdfItems.length / 25) + 1
+    }
+    else {
+      pages = props.pdfItems.length / 25
+    }
+    setPageCount(Math.floor(pages))
+  }
+
   return (
+    <>
     <TableContainer
       component={Paper}
       sx={{
@@ -66,7 +92,8 @@ const ContentTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {props.pdfItems.map((row) =>
+          {props.pdfItems.map((row, index) =>
+            index > page * 25 || index < page * 25 - 25 ? null :
             row.FileContents.map((item, index) => (
               <TableRow>
                 {index === 0 ? (
@@ -132,6 +159,10 @@ const ContentTable = (props) => {
         </TableBody>
       </Table>
     </TableContainer>
+    <Stack spacing={2} alignItems="center" sx={{mb:'2vh', mt: '2vh'}}>
+      <Pagination count={pageCount} size="large" page={page} onChange={handleChange}/>
+    </Stack>
+</>
   );
 };
 
