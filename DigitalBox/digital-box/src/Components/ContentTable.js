@@ -77,7 +77,7 @@ const ContentTable = (props) => {
                     sx={{
                       bgcolor: row.Checked ? "#c7f7d4" : "",
                       borderColor: "darkgray",
-                      pl: '1vh'
+                      pl: "1vh",
                     }}
                   >
                     <div
@@ -90,8 +90,9 @@ const ContentTable = (props) => {
                         onClick={handleSelected}
                         size="small"
                       >
-                        <CheckIcon onClick={handleSelected}
-                        value={row.FileId}
+                        <CheckIcon
+                          onClick={handleSelected}
+                          value={row.FileId}
                         />
                       </ToggleButton>
                     </div>
@@ -105,21 +106,22 @@ const ContentTable = (props) => {
                     borderColor: "darkgray",
                   }}
                   sx={{
-                  p: '1vh' }}
+                    p: "1vh",
+                  }}
                 >
-                  <span style={{'fontWeight': 'bold'}}>{`${++index}.`}&nbsp;</span>{`${item.Title}`}
+                  <span style={{ fontWeight: "bold" }}>
+                    {`${++index}.`}&nbsp;
+                  </span>
+                  {`${item.Title}`}
                 </TableCell>
-                <TableCell
-                  align="center"
-                  sx={{ borderColor: "darkgray" }}
-                >
+                <TableCell align="center" sx={{ borderColor: "darkgray" }}>
                   {item.Quantity}
                 </TableCell>
                 <TableCell
                   align="center"
                   sx={{
                     borderColor: "darkgray",
-                    "background-color": "#f5f1f1"
+                    "background-color": "#f5f1f1",
                   }}
                 >
                   {item.ShipDate}

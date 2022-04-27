@@ -15,54 +15,61 @@ const Search = (props) => {
 
   useEffect(() => props.getContent(), []);
 
-  const handleSearchClick = () => {
+  const handleSearchClick = (e) => {
+    e.preventDefault();
     props.setSearchValue(searchText);
   };
 
   const handleCancelClick = async () => {
-    let orders = props.pdfItems.filter((item) => item.Checked !== false)
+    let orders = props.pdfItems.filter((item) => item.Checked !== false);
 
-    if(orders.length < 1) return
+    if (orders.length < 1) return;
 
-    let cancelledIds = []
-    orders.forEach(order => {
-        cancelledIds.push(order.FileId)
-    })
-    await GoogleApi.cancelOrders(props.setPdfItems, props.setMessage, cancelledIds)
+    let cancelledIds = [];
+    orders.forEach((order) => {
+      cancelledIds.push(order.FileId);
+    });
+    await GoogleApi.cancelOrders(
+      props.setPdfItems,
+      props.setMessage,
+      cancelledIds
+    );
   };
 
   return (
     <Fragment>
-      <InputLabel
-        htmlFor="input-with-icon-adornment"
-        style={{
-          "padding-top": "3%",
-          color: "black",
-          "padding-bottom": "1%",
-          fontFamily: "Alfa Slab One",
-        }}
-      >
-        Search for anything
-      </InputLabel>
-      <Input
-        id="input-with-icon-adornment"
-        startAdornment={
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        }
-        sx={{ width: "50%" }}
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-      />
-      <Button
-        onClick={handleSearchClick}
-        variant="contained"
-        endIcon={<SendIcon />}
-        sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold", bgcolor: "black" }}
-      >
-        Search
-      </Button>
+      <form onSubmit={handleSearchClick}>
+        <InputLabel
+          htmlFor="input-with-icon-adornment"
+          style={{
+            "padding-top": "3%",
+            color: "black",
+            "padding-bottom": "1%",
+            fontFamily: "Alfa Slab One",
+          }}
+        >
+          Search for anything
+        </InputLabel>
+        <Input
+          id="input-with-icon-adornment"
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
+          sx={{ width: "50%" }}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          endIcon={<SendIcon />}
+          sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold", bgcolor: "black" }}
+        >
+          Search
+        </Button>
+      </form>
       <Stack
         direction="row"
         align="right"

@@ -55,30 +55,30 @@ export const InitializeGoogleDrive = () =>
     gapi.auth2.init({ client_id: credentials.ClientId });
   });
 
-  export async function cancelOrders(setPdfItems, setMessage, orders) {
-    let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
-    let responseBody = "";
-  
-    await fetch("http://localhost:2020/cancel", {
-      method: "POST",
-      headers: {
-        "content-type": "text/plain",
+export async function cancelOrders(setPdfItems, setMessage, orders) {
+  let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
+  let responseBody = "";
+
+  await fetch("http://localhost:2020/cancel", {
+    method: "POST",
+    headers: {
+      "content-type": "text/plain",
+    },
+    body: JSON.stringify({
+      token: {
+        access_token: token.access_token,
       },
-      body: JSON.stringify({
-        token: {
-          access_token: token.access_token,
-        },
-        Orders: orders,
-        Action: 'cancel',
-      }),
-    })
-      .then((response) => response.json().then((r) => (responseBody = r)))
-      .then(() => {
-        console.log(responseBody);
-        setMessage(responseBody.Message);
-        setPdfItems(responseBody.Orders);
-      });
-  }
+      Orders: orders,
+      Action: "cancel",
+    }),
+  })
+    .then((response) => response.json().then((r) => (responseBody = r)))
+    .then(() => {
+      console.log(responseBody);
+      setMessage(responseBody.Message);
+      setPdfItems(responseBody.Orders);
+    });
+}
 
 export async function getFileContent(setPdfItems, setMessage, searchValue) {
   let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
