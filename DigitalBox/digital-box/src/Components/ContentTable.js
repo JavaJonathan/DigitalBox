@@ -69,7 +69,7 @@ const ContentTable = (props) => {
           {props.pdfItems.map((row) =>
             row.FileContents.map((item, index) => (
               <TableRow>
-                {row.FileContents[0].Title === item.Title ? (
+                {index === 0 ? (
                   <TableCell
                     align="center"
                     rowSpan={row.FileContents.length}
