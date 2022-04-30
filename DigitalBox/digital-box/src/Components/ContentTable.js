@@ -30,8 +30,21 @@ const ContentTable = (props) => {
 
   useEffect(() => {
     getAmountOfPages()
-    setPage(1)
   }, [props.pdfItems])
+
+  useEffect(() => {
+    let newPdfItems = props.pdfItems.map(
+      (item) => { return {
+        ...item, Checked: false
+      } 
+      }
+    );
+    props.setPdfItems([...newPdfItems]);
+  }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [props.searchCount])
 
   const getAmountOfPages = () => {
     let pages = 0

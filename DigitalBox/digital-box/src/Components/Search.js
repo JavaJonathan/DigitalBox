@@ -13,11 +13,12 @@ import * as GoogleApi from "./GoogleApi";
 const Search = (props) => {
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => props.getContent(), []);
+  useEffect(() => props.handleGetFileContent(searchText), []);
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    props.setSearchValue(searchText);
+    props.handleGetFileContent(searchText);
+    props.setSearchCount(props.searchCount + 1)
   };
 
   const handleCancelClick = async () => {
