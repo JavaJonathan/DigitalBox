@@ -21,6 +21,10 @@ const AlertUI = (props) => {
       setSeverityState("success");
       setOpen(true);
       setUiMessage(props.propMessage);
+    } else if (props.propMessage === "Shipping... please wait a moment.") {
+      setSeverityState("warning");
+      setOpen(true);
+      setUiMessage(props.propMessage);
     }
   }, [props.propMessage]);
 

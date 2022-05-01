@@ -18,7 +18,7 @@ const Search = (props) => {
   const handleSearchClick = (e) => {
     e.preventDefault();
     props.handleGetFileContent(searchText);
-    props.setSearchCount(props.searchCount + 1)
+    props.setSearchCount(props.searchCount + 1);
   };
 
   const handleCancelClick = async () => {
@@ -35,6 +35,33 @@ const Search = (props) => {
       props.setMessage,
       cancelledIds
     );
+  };
+
+  const handleShipClick = async () => {
+    let orders = props.pdfItems.filter((item) => item.Checked !== false);
+
+    if (orders.length < 1) return;
+
+    let shippedIds = [];
+    orders.forEach((order) => {
+      shippedIds.push(order.FileId);
+    });
+
+    props.setMessage("Shipping... please wait a moment.");
+
+    await GoogleApi.shipOrders(props.setPdfItems, props.setMessage, shippedIds);
+  };
+
+  const handleSelectAll = async () => {
+    let orders = props.pdfItems.map((item, index) => {
+       if( index > ((props.page * 25) - 1) || index < (props.page * 25 - 25) ) {
+        return item;
+      } else {
+      return { ...item, Checked: true };
+      }
+    });
+
+    props.setPdfItems(orders);
   };
 
   return (
@@ -79,6 +106,13 @@ const Search = (props) => {
       >
         <Button
           variant="contained"
+          sx={{ bgcolor: "black", fontWeight: "bold", borderRadius: "10px" }}
+          onClick={handleSelectAll}
+        >
+          Select All
+        </Button>
+        <Button
+          variant="contained"
           endIcon={<CancelScheduleSendIcon />}
           sx={{ bgcolor: "red", fontWeight: "bold", borderRadius: "10px" }}
           onClick={handleCancelClick}
@@ -89,6 +123,7 @@ const Search = (props) => {
           variant="contained"
           endIcon={<LocalShippingIcon />}
           sx={{ bgcolor: "green", fontWeight: "bold", borderRadius: "10px" }}
+          onClick={handleShipClick}
         >
           Ship
         </Button>

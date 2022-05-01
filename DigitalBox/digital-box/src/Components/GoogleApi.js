@@ -80,6 +80,31 @@ export async function cancelOrders(setPdfItems, setMessage, orders) {
     });
 }
 
+export async function shipOrders(setPdfItems, setMessage, orders) {
+  let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
+  let responseBody = "";
+
+  await fetch("http://localhost:2020/ship", {
+    method: "POST",
+    headers: {
+      "content-type": "text/plain",
+    },
+    body: JSON.stringify({
+      token: {
+        access_token: token.access_token,
+      },
+      Orders: orders,
+      Action: "ship",
+    }),
+  })
+    .then((response) => response.json().then((r) => (responseBody = r)))
+    .then(() => {
+      console.log(responseBody);
+      setMessage(responseBody.Message);
+      setPdfItems(responseBody.Orders);
+    });
+}
+
 export async function getFileContent(setPdfItems, setMessage, searchValue) {
   let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
   let responseBody = "";
