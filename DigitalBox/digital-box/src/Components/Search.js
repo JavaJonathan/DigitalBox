@@ -53,14 +53,31 @@ const Search = (props) => {
   };
 
   const handleSelectAll = async () => {
-    let orders = props.pdfItems.map((item, index) => {
-       if( index > ((props.page * 25) - 1) || index < (props.page * 25 - 25) ) {
-        return item;
-      } else {
-      return { ...item, Checked: true };
-      }
-    });
+      let pagedItems = props.pdfItems.filter((item, index) => {
+          return !(index > ((props.page * 25) - 1) || index < (props.page * 25 - 25)
+      )})
+    let orders = []
 
+    console.log(pagedItems)
+
+    if(pagedItems.every(pagedItem => pagedItem.Checked)){
+        orders = props.pdfItems.map((item, index) => {
+            if( index > ((props.page * 25) - 1) || index < (props.page * 25 - 25) ) {
+             return item;
+           } else {
+           return { ...item, Checked: false };
+           }
+         });
+    }
+    else {
+        orders = props.pdfItems.map((item, index) => {
+            if( index > ((props.page * 25) - 1) || index < (props.page * 25 - 25) ) {
+             return item;
+           } else {
+           return { ...item, Checked: true };
+           }
+         });
+    }
     props.setPdfItems(orders);
   };
 

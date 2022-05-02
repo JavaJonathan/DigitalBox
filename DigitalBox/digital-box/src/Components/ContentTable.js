@@ -11,6 +11,9 @@ import CheckIcon from "@mui/icons-material/Check";
 import ToggleButton from "@mui/material/ToggleButton";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IconButton from '@mui/material/IconButton';
+import Switch from '@mui/material/Switch';
 
 const ContentTable = (props) => {
   const [pageCount, setPageCount] = useState(1);
@@ -125,18 +128,13 @@ const ContentTable = (props) => {
                               "font-size": "15px",
                             }}
                           >
-                            <ToggleButton
+                            <Switch
                               value={row.FileId}
-                              selected={row.Checked}
-                              color={row.Checked ? "success" : "standard"}
+                              checked={row.Checked}
                               onClick={handleSelected}
-                              size="small"
+                              color="success"
                             >
-                              <CheckIcon
-                                onClick={handleSelected}
-                                value={row.FileId}
-                              />
-                            </ToggleButton>
+                            </Switch>
                           </div>
                           {row.FileContents[0].OrderNumber}
                         </TableCell>
