@@ -25,7 +25,11 @@ const AlertUI = (props) => {
       setSeverityState("warning");
       setOpen(true);
       setUiMessage(props.propMessage);
-    }
+    } else if (props.propMessage === "Your search is missing some orders. It should be updated within a few minutes.") {
+        setSeverityState("warning");
+        setOpen(true);
+        setUiMessage(props.propMessage);
+      }
   }, [props.propMessage]);
 
   return open ? (
