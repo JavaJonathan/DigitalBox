@@ -17,7 +17,8 @@ const Search = (props) => {
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    props.handleGetFileContent(searchText);
+    props.setSearchValue(searchText)
+    props.handleGetFileContent();
     props.setSearchCount(props.searchCount + 1);
   };
 
@@ -30,11 +31,17 @@ const Search = (props) => {
     orders.forEach((order) => {
       cancelledIds.push(order.FileId);
     });
+    if(window.confirm(`Are you sure you want to cancel ${orders.length} order(s)?`)) {
+
     await GoogleApi.cancelOrders(
       props.setPdfItems,
       props.setMessage,
       cancelledIds
     );
+    }
+    else {
+        //do nothing
+    }
   };
 
   const handleShipClick = async () => {
@@ -47,9 +54,13 @@ const Search = (props) => {
       shippedIds.push(order.FileId);
     });
 
-    props.setMessage("Shipping... please wait a moment.");
-
-    await GoogleApi.shipOrders(props.setPdfItems, props.setMessage, shippedIds);
+    if(window.confirm(`Are you sure you want to ship ${orders.length} order(s)?`)) {
+        props.setMessage("Shipping... please wait a moment.");
+        await GoogleApi.shipOrders(props.setPdfItems, props.setMessage, shippedIds);
+    }
+    else {
+        // do nothing
+    }
   };
 
   const handleSelectAll = async () => {
