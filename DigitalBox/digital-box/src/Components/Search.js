@@ -18,7 +18,6 @@ const Search = (props) => {
   const handleSearchClick = (e) => {
     e.preventDefault();
     props.setSearchValue(searchText);
-    props.handleGetFileContent();
     props.setSearchCount(props.searchCount + 1);
   };
 
