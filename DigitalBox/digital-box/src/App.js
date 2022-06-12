@@ -19,10 +19,10 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
   const [help, setHelp] = useState(false);
+  const [searchCount, setSearchCount] = useState(0);
 
   useEffect(() => GoogleApi.getGoogleCredentials(setCredentialsLoaded), []);
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
-  useEffect(() => handleGetFileContent(), [searchValue]);
 
   const handleLogin = () => {
     GoogleApi.authenticate(setSignedIn);
@@ -52,12 +52,15 @@ function App() {
                 setSearchValue={setSearchValue}
                 setMessage={setMessage}
                 page={page}
+                searchCount={searchCount}
+                setSearchCount={setSearchCount}
               />
               <ContentTable
                 pdfItems={pdfItems}
                 setPdfItems={setPdfItems}
                 page={page}
                 setPage={setPage}
+                searchCount={searchCount}
               />
             </Fragment>
           )}
