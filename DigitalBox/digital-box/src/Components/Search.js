@@ -17,7 +17,7 @@ const Search = (props) => {
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    props.setSearchValue(searchText)
+    props.setSearchValue(searchText);
     props.handleGetFileContent();
     props.setSearchCount(props.searchCount + 1);
   };
@@ -31,16 +31,18 @@ const Search = (props) => {
     orders.forEach((order) => {
       cancelledIds.push(order.FileId);
     });
-    if(window.confirm(`Are you sure you want to cancel ${orders.length} order(s)?`)) {
-
-    await GoogleApi.cancelOrders(
-      props.setPdfItems,
-      props.setMessage,
-      cancelledIds
-    );
-    }
-    else {
-        //do nothing
+    if (
+      window.confirm(
+        `Are you sure you want to cancel ${orders.length} order(s)?`
+      )
+    ) {
+      await GoogleApi.cancelOrders(
+        props.setPdfItems,
+        props.setMessage,
+        cancelledIds
+      );
+    } else {
+      //do nothing
     }
   };
 
@@ -54,40 +56,44 @@ const Search = (props) => {
       shippedIds.push(order.FileId);
     });
 
-    if(window.confirm(`Are you sure you want to ship ${orders.length} order(s)?`)) {
-        props.setMessage("Shipping... please wait a moment.");
-        await GoogleApi.shipOrders(props.setPdfItems, props.setMessage, shippedIds);
-    }
-    else {
-        // do nothing
+    if (
+      window.confirm(`Are you sure you want to ship ${orders.length} order(s)?`)
+    ) {
+      props.setMessage("Shipping... please wait a moment.");
+      await GoogleApi.shipOrders(
+        props.setPdfItems,
+        props.setMessage,
+        shippedIds
+      );
+    } else {
+      // do nothing
     }
   };
 
   const handleSelectAll = async () => {
-      let pagedItems = props.pdfItems.filter((item, index) => {
-          return !(index > ((props.page * 25) - 1) || index < (props.page * 25 - 25)
-      )})
-    let orders = []
+    let pagedItems = props.pdfItems.filter((item, index) => {
+      return !(index > props.page * 25 - 1 || index < props.page * 25 - 25);
+    });
+    let orders = [];
 
-    console.log(pagedItems)
+    console.log(pagedItems);
 
-    if(pagedItems.every(pagedItem => pagedItem.Checked)){
-        orders = props.pdfItems.map((item, index) => {
-            if( index > ((props.page * 25) - 1) || index < (props.page * 25 - 25) ) {
-             return item;
-           } else {
-           return { ...item, Checked: false };
-           }
-         });
-    }
-    else {
-        orders = props.pdfItems.map((item, index) => {
-            if( index > ((props.page * 25) - 1) || index < (props.page * 25 - 25) ) {
-             return item;
-           } else {
-           return { ...item, Checked: true };
-           }
-         });
+    if (pagedItems.every((pagedItem) => pagedItem.Checked)) {
+      orders = props.pdfItems.map((item, index) => {
+        if (index > props.page * 25 - 1 || index < props.page * 25 - 25) {
+          return item;
+        } else {
+          return { ...item, Checked: false };
+        }
+      });
+    } else {
+      orders = props.pdfItems.map((item, index) => {
+        if (index > props.page * 25 - 1 || index < props.page * 25 - 25) {
+          return item;
+        } else {
+          return { ...item, Checked: true };
+        }
+      });
     }
     props.setPdfItems(orders);
   };

@@ -1,12 +1,18 @@
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
 
-const NavBar = () => {
+const NavBar = (props) => {
+  const handleTroubleshootClick = () => {
+    props.setHelp(true);
+  };
+
+  const handleHomeClick = () => {
+    props.setHelp(false);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ "background-color": "black" }}>
@@ -18,6 +24,27 @@ const NavBar = () => {
           >
             {"<DigitalBox />"}
           </Typography>
+          {props.help ? (
+            <Button
+              variant="contained"
+              size="small"
+              color="success"
+              onClick={handleHomeClick}
+              sx={{position: "absolute"}}
+            >
+              Back Home
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              size="small"
+              color="error"
+              onClick={handleTroubleshootClick}
+              sx={{position: "absolute"}}
+            >
+              Troubleshoot
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

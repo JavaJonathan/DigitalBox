@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Search from "./Components/Search";
 import "@fontsource/alfa-slab-one";
 import GlobalStyles from "@mui/material/GlobalStyles";
+import Help from "./Components/Help";
 
 function App() {
   const [pdfItems, setPdfItems] = useState([]);
@@ -17,6 +18,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
+  const [help, setHelp] = useState(false);
 
   useEffect(() => GoogleApi.getGoogleCredentials(setCredentialsLoaded), []);
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
@@ -35,24 +37,30 @@ function App() {
       <GlobalStyles styles={{ body: { "font-family": "Alfa Slab One" } }} />
       {signedIn ? (
         <Fragment>
-          <NavBar />
-          {message !== "" ? (
-            <AlertUI propMessage={message} setMessage={setMessage} />
-          ) : null}
-          <Search
-            pdfItems={pdfItems}
-            handleGetFileContent={handleGetFileContent}
-            setPdfItems={setPdfItems}
-            setSearchValue={setSearchValue}
-            setMessage={setMessage}
-            page={page}
-          />
-          <ContentTable
-            pdfItems={pdfItems}
-            setPdfItems={setPdfItems}
-            page={page}
-            setPage={setPage}
-          />
+          <NavBar setHelp={setHelp} help={help} />
+          {help ? (
+            <Help />
+          ) : (
+            <Fragment>
+              {message !== "" ? (
+                <AlertUI propMessage={message} setMessage={setMessage} />
+              ) : null}
+              <Search
+                pdfItems={pdfItems}
+                handleGetFileContent={handleGetFileContent}
+                setPdfItems={setPdfItems}
+                setSearchValue={setSearchValue}
+                setMessage={setMessage}
+                page={page}
+              />
+              <ContentTable
+                pdfItems={pdfItems}
+                setPdfItems={setPdfItems}
+                page={page}
+                setPage={setPage}
+              />
+            </Fragment>
+          )}
         </Fragment>
       ) : (
         <div

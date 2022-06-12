@@ -7,16 +7,18 @@ const AlertUI = (props) => {
   const [UIMessage, setUiMessage] = useState("");
 
   useEffect(() => {
-    if (props.propMessage.includes("Your search results are up to date as of")) {
+    if (
+      props.propMessage.includes("Your search results are up to date as of")
+    ) {
       setSeverityState("info");
       setOpen(true);
-      setUiMessage(
-        props.propMessage
-      );
-    } else if (props.propMessage.includes("Your search is missing some new orders.")) {
-        setSeverityState("warning");
-        setOpen(true);
-        setUiMessage(props.propMessage);
+      setUiMessage(props.propMessage);
+    } else if (
+      props.propMessage.includes("Your search is missing some new orders.")
+    ) {
+      setSeverityState("warning");
+      setOpen(true);
+      setUiMessage(props.propMessage);
     } else if (props.propMessage.includes("successfully")) {
       setSeverityState("success");
       setOpen(true);
@@ -25,7 +27,7 @@ const AlertUI = (props) => {
       setSeverityState("warning");
       setOpen(true);
       setUiMessage(props.propMessage);
-    } 
+    }
   }, [props.propMessage]);
 
   return open ? (

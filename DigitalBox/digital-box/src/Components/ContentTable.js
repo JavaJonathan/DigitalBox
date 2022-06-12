@@ -11,9 +11,9 @@ import CheckIcon from "@mui/icons-material/Check";
 import ToggleButton from "@mui/material/ToggleButton";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import IconButton from '@mui/material/IconButton';
-import Switch from '@mui/material/Switch';
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
 
 const ContentTable = (props) => {
   const [pageCount, setPageCount] = useState(1);
@@ -107,7 +107,7 @@ const ContentTable = (props) => {
           </TableHead>
           <TableBody>
             {props.pdfItems.map((row, index) =>
-              index > ((props.page * 25) - 1) || index < (props.page * 25 - 25)
+              index > props.page * 25 - 1 || index < props.page * 25 - 25
                 ? null
                 : row.FileContents.map((item, index) => (
                     <TableRow>
@@ -133,8 +133,7 @@ const ContentTable = (props) => {
                               checked={row.Checked}
                               onClick={handleSelected}
                               color="success"
-                            >
-                            </Switch>
+                            ></Switch>
                           </div>
                           {row.FileContents[0].OrderNumber}
                         </TableCell>
