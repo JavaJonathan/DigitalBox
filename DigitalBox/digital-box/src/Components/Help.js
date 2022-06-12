@@ -11,7 +11,7 @@ const Help = () => {
     mr: "15%",
 mt:"2%", boxShadow:10}}>
 <div style={{"font-size": "4vh", "margin-top": "1vh"}}>
-Running into an issue? These troubleshooting steps may help.
+Running into an issue? 🤔 These troubleshooting steps may help.
 </div>
 <Divider variant="middle" sx={{mb:"1%", mt:"1%"}} color="black"/>
     <div>

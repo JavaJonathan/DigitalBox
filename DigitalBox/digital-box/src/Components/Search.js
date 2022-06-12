@@ -18,7 +18,6 @@ const Search = (props) => {
   const handleSearchClick = (e) => {
     e.preventDefault();
     props.setSearchValue(searchText);
-    props.handleGetFileContent();
     props.setSearchCount(props.searchCount + 1);
   };
 
@@ -120,7 +119,6 @@ const Search = (props) => {
             </InputAdornment>
           }
           sx={{ width: "50%" }}
-          value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Button

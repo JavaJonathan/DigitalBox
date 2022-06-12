@@ -23,6 +23,7 @@ function App() {
 
   useEffect(() => GoogleApi.getGoogleCredentials(setCredentialsLoaded), []);
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
+  useEffect(() => handleGetFileContent(), [searchCount]);
 
   const handleLogin = () => {
     GoogleApi.authenticate(setSignedIn);
