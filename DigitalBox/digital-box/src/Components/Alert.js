@@ -23,7 +23,15 @@ const AlertUI = (props) => {
       setSeverityState("success");
       setOpen(true);
       setUiMessage(props.propMessage);
-    } else if (props.propMessage === "Shipping... please wait a moment.") {
+    } else if (props.propMessage === "Shipping... please wait a moment while we download your requested orders.") {
+      setSeverityState("warning");
+      setOpen(true);
+      setUiMessage(props.propMessage);
+    } else if (props.propMessage === "Sorry, we encountered an error. Please try again.") {
+      setSeverityState("error");
+      setOpen(true);
+      setUiMessage(props.propMessage);
+    } else if (props.propMessage === "Some of your orders have already been shipped or cancelled. Please try again.") {
       setSeverityState("warning");
       setOpen(true);
       setUiMessage(props.propMessage);

@@ -58,7 +58,7 @@ const Search = (props) => {
     if (
       window.confirm(`Are you sure you want to ship ${orders.length} order(s)?`)
     ) {
-      props.setMessage("Shipping... please wait a moment.");
+      props.setMessage("Shipping... please wait a moment while we download your requested orders.");
       await GoogleApi.shipOrders(
         props.setPdfItems,
         props.setMessage,
