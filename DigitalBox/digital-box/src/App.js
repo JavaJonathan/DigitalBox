@@ -44,7 +44,7 @@ function App() {
           ) : (
             <Fragment>
               {message !== "" ? (
-                <AlertUI propMessage={message} setMessage={setMessage} />
+                <AlertUI propMessage={message} setMessage={setMessage} setSignedIn={setSignedIn} />
               ) : null}
               <Search
                 pdfItems={pdfItems}

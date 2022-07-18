@@ -31,10 +31,16 @@ const AlertUI = (props) => {
       setSeverityState("error");
       setOpen(true);
       setUiMessage(props.propMessage);
-    } else if (props.propMessage === "Some of your orders have already been shipped or cancelled. Please try again.") {
+    } else if (props.propMessage === "Some of your orders have already been shipped or cancelled.") {
       setSeverityState("warning");
       setOpen(true);
       setUiMessage(props.propMessage);
+    }
+    else if (props.propMessage === "You have been logged out, please log in again and retry.") {
+      setSeverityState("error");
+      setOpen(true);
+      setUiMessage(props.propMessage);
+      props.setSignedIn(false)
     }
   }, [props.propMessage]);
 
