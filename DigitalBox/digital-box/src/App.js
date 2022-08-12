@@ -20,8 +20,18 @@ function App() {
   const [page, setPage] = useState(1);
   const [help, setHelp] = useState(false);
   const [searchCount, setSearchCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => GoogleApi.getGoogleCredentials(setCredentialsLoaded), []);
+  useEffect(() => {
+     GoogleApi.getGoogleCredentials(setCredentialsLoaded)
+
+     let token = localStorage.getItem("DigitalBoxToken")
+
+     if(token) {
+      setSignedIn(true)
+     }
+  }, []);
+
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
   useEffect(() => handleGetFileContent(), [searchCount]);
 
@@ -30,7 +40,7 @@ function App() {
   };
 
   const handleGetFileContent = () => {
-    GoogleApi.getFileContent(setPdfItems, setMessage, searchValue);
+    GoogleApi.getFileContent(setPdfItems, setMessage, searchValue, setIsLoading);
   };
 
   return (
@@ -55,6 +65,8 @@ function App() {
                 page={page}
                 searchCount={searchCount}
                 setSearchCount={setSearchCount}
+                setIsLoading={setIsLoading}
+                isLoading={isLoading}
               />
               <ContentTable
                 pdfItems={pdfItems}

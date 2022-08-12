@@ -19,6 +19,7 @@ const Search = (props) => {
     e.preventDefault();
     props.setSearchValue(searchText);
     props.setSearchCount(props.searchCount + 1);
+    props.setIsLoading(true);
   };
 
   const handleCancelClick = async () => {
@@ -126,8 +127,9 @@ const Search = (props) => {
           variant="contained"
           endIcon={<SendIcon />}
           sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold", bgcolor: "black" }}
+          disabled={props.isLoading}
         >
-          Search
+          {props.isLoading ? 'Loading...' : 'Search'}
         </Button>
       </form>
       <Stack
