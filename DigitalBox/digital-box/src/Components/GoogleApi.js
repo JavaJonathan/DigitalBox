@@ -1,7 +1,11 @@
 import { gapi } from "gapi-script";
 
 let credentials = {};
-let token = ''
+let accessToken = ''
+
+export function setAccessToken(token) {
+  accessToken = token
+}
 
 export function getGoogleCredentials(setCredentialsLoaded) {
   fetch("http://localhost:2020/", {
@@ -28,8 +32,8 @@ export function authenticate(setSignedIn) {
     .then(
       function (response) {
         console.log("Sign-in successful");
-        token = response.xc.access_token
-        localStorage.setItem("DigitalBoxToken", `[${token}]`) 
+        accessToken = response.xc.access_token
+        localStorage.setItem("DigitalBoxToken", `${accessToken}`) 
         setSignedIn(true);
       },
       function (error) {
@@ -69,7 +73,7 @@ export async function cancelOrders(setPdfItems, setMessage, orders) {
     },
     body: JSON.stringify({
       token: {
-        access_token: token,
+        access_token: accessToken,
       },
       Orders: orders,
       Action: "cancel",
@@ -93,7 +97,7 @@ export async function shipOrders(setPdfItems, setMessage, orders) {
     },
     body: JSON.stringify({
       token: {
-        access_token: token,
+        access_token: accessToken,
       },
       Orders: orders,
       Action: "ship",
@@ -117,7 +121,7 @@ export async function getFileContent(setPdfItems, setMessage, searchValue, setIs
     },
     body: JSON.stringify({
       token: {
-        access_token: token,
+        access_token: accessToken,
       },
       Filter: searchValue,
     }),

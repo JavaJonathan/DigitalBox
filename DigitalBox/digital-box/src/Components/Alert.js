@@ -41,7 +41,6 @@ const AlertUI = (props) => {
       setOpen(true);
       setUiMessage(props.propMessage);
       props.setSignedIn(false)
-      localStorage.removeItem("DigitalBoxToken")
     }
   }, [props.propMessage]);
 

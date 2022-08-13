@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import * as GoogleApi from "./Components/GoogleApi";
 import NavBar from "./Components/NavBar";
 import AlertUI from "./Components/Alert";
@@ -28,12 +28,13 @@ function App() {
      let token = localStorage.getItem("DigitalBoxToken")
 
      if(token) {
-      setSignedIn(true)
+       GoogleApi.setAccessToken(token)
+       setSignedIn(true)
      }
   }, []);
 
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
-  useEffect(() => { if(signedIn) handleGetFileContent() }, [searchCount]);
+  useCallback(() => { if(signedIn) handleGetFileContent() }, [searchCount]);
 
   const handleLogin = () => {
     GoogleApi.authenticate(setSignedIn);
