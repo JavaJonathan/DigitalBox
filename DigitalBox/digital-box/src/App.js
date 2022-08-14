@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { Fragment, useCallback, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import * as GoogleApi from "./Components/GoogleApi";
 import NavBar from "./Components/NavBar";
 import AlertUI from "./Components/Alert";
@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
-  useCallback(() => { if(signedIn) handleGetFileContent() }, [searchCount]);
+  useEffect(() => { if(signedIn) handleGetFileContent() }, [searchCount]);
 
   const handleLogin = () => {
     GoogleApi.authenticate(setSignedIn);
