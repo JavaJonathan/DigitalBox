@@ -163,7 +163,7 @@ const Search = (props) => {
         </Button>
         <span style={{ display: "flex", "align-items": "center" }}>
           {props.pdfItems.filter((item) => item.Checked !== false).length}{" "}
-          Item(s) Selected | {props.pdfItems.length} Order(s) Total
+          Order(s) Selected | {props.pdfItems.length} Order(s) Total
         </span>
       </Stack>
     </Fragment>
