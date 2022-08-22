@@ -41,6 +41,7 @@ const AlertUI = (props) => {
       setOpen(true);
       setUiMessage(props.propMessage);
       props.setSignedIn(false)
+      props.setMessage('')
     }
   }, [props.propMessage]);
 
