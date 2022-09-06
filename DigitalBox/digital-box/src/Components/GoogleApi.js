@@ -1,11 +1,6 @@
 import { gapi } from "gapi-script";
 
 let credentials = {};
-let accessToken = ''
-
-export function setAccessToken(token) {
-  accessToken = token
-}
 
 export function getGoogleCredentials(setCredentialsLoaded) {
   fetch("http://localhost:2020/", {
@@ -31,9 +26,8 @@ export function authenticate(setSignedIn) {
     })
     .then(
       function (response) {
-        console.log("Sign-in successful");
-        accessToken = response.xc.access_token
-        localStorage.setItem("DigitalBoxToken", `${accessToken}`) 
+        console.log("Sign-in successful.");
+        localStorage.setItem("DigitalBoxToken", `${response.xc.access_token}`) 
         setSignedIn(true);
       },
       function (error) {
@@ -63,7 +57,6 @@ export const InitializeGoogleDrive = () =>
   });
 
 export async function cancelOrders(setPdfItems, setMessage, orders) {
-  // let token = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse();
   let responseBody = "";
 
   await fetch("http://localhost:2020/cancel", {
@@ -73,7 +66,7 @@ export async function cancelOrders(setPdfItems, setMessage, orders) {
     },
     body: JSON.stringify({
       token: {
-        access_token: accessToken,
+        access_token: localStorage.getItem("DigitalBoxToken"),
       },
       Orders: orders,
       Action: "cancel",
@@ -97,7 +90,7 @@ export async function shipOrders(setPdfItems, setMessage, orders) {
     },
     body: JSON.stringify({
       token: {
-        access_token: accessToken,
+        access_token: localStorage.getItem("DigitalBoxToken"),
       },
       Orders: orders,
       Action: "ship",
@@ -121,7 +114,7 @@ export async function getFileContent(setPdfItems, setMessage, searchValue, setIs
     },
     body: JSON.stringify({
       token: {
-        access_token: accessToken,
+        access_token: localStorage.getItem("DigitalBoxToken"),
       },
       Filter: searchValue,
     }),
@@ -131,6 +124,9 @@ export async function getFileContent(setPdfItems, setMessage, searchValue, setIs
       console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
+      gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse().then(response => {
+        localStorage.setItem("DigitalBoxToken", `${response.access_token}`) 
+      })
       setIsLoading(false);
     });
 }

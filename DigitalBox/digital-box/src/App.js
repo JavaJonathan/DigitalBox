@@ -28,7 +28,6 @@ function App() {
      let token = localStorage.getItem("DigitalBoxToken")
 
      if(token) {
-       GoogleApi.setAccessToken(token)
        setSignedIn(true)
      }
   }, []);
