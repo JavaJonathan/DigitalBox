@@ -1,62 +1,4 @@
-import { gapi } from "gapi-script";
-
-let credentials = {};
-
-export function getGoogleCredentials(setCredentialsLoaded) {
-  fetch("http://localhost:2020/", {
-    method: "GET",
-    headers: {
-      "content-type": "text/plain",
-    },
-  }).then((response) =>
-    response.json().then((r) => {
-      credentials = r;
-      setCredentialsLoaded(true);
-      console.log(credentials);
-    })
-  );
-}
-
-export function authenticate(setSignedIn) {
-  gapi.auth2
-    .getAuthInstance()
-    .signIn({
-      scope:
-        "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.metadata https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.photos.readonly https://www.googleapis.com/auth/drive.readonly",
-    })
-    .then(
-      function (response) {
-        console.log("Sign-in successful.");
-        localStorage.setItem("DigitalBoxToken", `${response.xc.access_token}`) 
-        setSignedIn(true);
-      },
-      function (error) {
-        console.error("Error signing in", error);
-      }
-    )
-    .then(loadClient());
-}
-
-function loadClient() {
-  gapi.client.setApiKey(credentials.ApiKey);
-  return gapi.client
-    .load("https://content.googleapis.com/discovery/v1/apis/drive/v3/rest")
-    .then(
-      function () {
-        console.log("GAPI client loaded for API");
-      },
-      function (err) {
-        console.error("Error loading GAPI client for API", err);
-      }
-    );
-}
-
-export const InitializeGoogleDrive = () =>
-  gapi.load("client:auth2", function () {
-    gapi.auth2.init({ client_id: credentials.ClientId });
-  });
-
-export async function cancelOrders(setPdfItems, setMessage, orders) {
+export async function cancelOrders(setPdfItems, setMessage, orders, setAuthToken) {
   let responseBody = "";
 
   await fetch("http://localhost:2020/cancel", {
@@ -77,10 +19,11 @@ export async function cancelOrders(setPdfItems, setMessage, orders) {
       console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
+      setAuthToken(responseBody.Token.token)
     });
 }
 
-export async function shipOrders(setPdfItems, setMessage, orders) {
+export async function shipOrders(setPdfItems, setMessage, orders, setAuthToken) {
   let responseBody = "";
 
   await fetch("http://localhost:2020/ship", {
@@ -104,7 +47,7 @@ export async function shipOrders(setPdfItems, setMessage, orders) {
     });
 }
 
-export async function getFileContent(setPdfItems, setMessage, searchValue, setIsLoading) {
+export async function getFileContent(setPdfItems, setMessage, searchValue, setIsLoading, setAuthToken) {
   let responseBody = "";
 
   await fetch("http://localhost:2020/", {
@@ -124,9 +67,7 @@ export async function getFileContent(setPdfItems, setMessage, searchValue, setIs
       console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
-      gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse().then(response => {
-        localStorage.setItem("DigitalBoxToken", `${response.access_token}`) 
-      })
       setIsLoading(false);
+      setAuthToken(responseBody.Token.token)
     });
 }

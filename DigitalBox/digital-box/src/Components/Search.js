@@ -39,7 +39,8 @@ const Search = (props) => {
       await GoogleApi.cancelOrders(
         props.setPdfItems,
         props.setMessage,
-        cancelledIds
+        cancelledIds,
+        props.setAuthToken
       );
     } else {
       //do nothing
@@ -63,7 +64,8 @@ const Search = (props) => {
       await GoogleApi.shipOrders(
         props.setPdfItems,
         props.setMessage,
-        shippedIds
+        shippedIds,
+        props.setAuthToken
       );
     } else {
       // do nothing

@@ -10,10 +10,11 @@ import Search from "./Components/Search";
 import "@fontsource/alfa-slab-one";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Help from "./Components/Help";
+import { useGoogleLogin } from '@react-oauth/google';
 
 function App() {
   const [pdfItems, setPdfItems] = useState([]);
-  const [credentialsLoaded, setCredentialsLoaded] = useState(false);
+  const [authToken, setAuthToken] = useState("");
   const [signedIn, setSignedIn] = useState(false);
   const [message, setMessage] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -23,8 +24,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-     GoogleApi.getGoogleCredentials(setCredentialsLoaded)
-
      let token = localStorage.getItem("DigitalBoxToken")
 
      if(token) {
@@ -32,15 +31,23 @@ function App() {
      }
   }, []);
 
-  useEffect(() => GoogleApi.InitializeGoogleDrive(), [credentialsLoaded]);
+  useEffect(() => {
+    if(authToken !== "") localStorage.setItem("DigitalBoxToken", authToken)
+ }, [authToken]);
+
   useEffect(() => { if(signedIn) handleGetFileContent() }, [searchCount]);
 
-  const handleLogin = () => {
-    GoogleApi.authenticate(setSignedIn);
-  };
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => 
+    {
+      console.log(tokenResponse);
+      localStorage.setItem("DigitalBoxToken", `${tokenResponse.access_token}`) 
+      setSignedIn(true); 
+    },
+  });
 
   const handleGetFileContent = () => {
-    GoogleApi.getFileContent(setPdfItems, setMessage, searchValue, setIsLoading);
+    GoogleApi.getFileContent(setPdfItems, setMessage, searchValue, setIsLoading, setAuthToken);
   };
 
   return (
@@ -67,6 +74,7 @@ function App() {
                 setSearchCount={setSearchCount}
                 setIsLoading={setIsLoading}
                 isLoading={isLoading}
+                setAuthToken={setAuthToken}
               />
               <ContentTable
                 pdfItems={pdfItems}
@@ -95,7 +103,7 @@ function App() {
           {"<Digital Box />"}
           <br />
           <Button
-            onClick={handleLogin}
+            onClick={login}
             variant="contained"
             endIcon={<GoogleIcon fontSize="large" />}
           >
