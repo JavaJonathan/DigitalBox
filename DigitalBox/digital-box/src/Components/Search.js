@@ -8,12 +8,12 @@ import Stack from "@mui/material/Stack";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
 import SendIcon from "@mui/icons-material/Send";
-import * as GoogleApi from "./GoogleApi";
+import * as GoogleApi from "./HttpHelper";
 
 const Search = (props) => {
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => props.handleGetFileContent(searchText), []);
+  useEffect(() => props.handleSearch(searchText), []);
 
   const handleSearchClick = (e) => {
     e.preventDefault();
@@ -60,7 +60,9 @@ const Search = (props) => {
     if (
       window.confirm(`Are you sure you want to ship ${orders.length} order(s)?`)
     ) {
-      props.setMessage("Shipping... please wait a moment while we download your requested orders.");
+      props.setMessage(
+        "Shipping... please wait a moment while we download your requested orders."
+      );
       await GoogleApi.shipOrders(
         props.setPdfItems,
         props.setMessage,
@@ -103,17 +105,6 @@ const Search = (props) => {
   return (
     <Fragment>
       <form onSubmit={handleSearchClick}>
-        <InputLabel
-          htmlFor="input-with-icon-adornment"
-          style={{
-            "padding-top": "3%",
-            color: "black",
-            "padding-bottom": "1%",
-            fontFamily: "Alfa Slab One",
-          }}
-        >
-          Search for anything
-        </InputLabel>
         <Input
           id="input-with-icon-adornment"
           startAdornment={
@@ -121,26 +112,30 @@ const Search = (props) => {
               <SearchIcon />
             </InputAdornment>
           }
-          sx={{ width: "50%" }}
+          sx={{ width: "50%", pt: "2%" }}
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Button
           type="submit"
           variant="contained"
           endIcon={<SendIcon />}
-          sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold", bgcolor: "black" }}
+          sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold" }}
+          style={{
+            background: "linear-gradient(to right bottom, #02aab0, #00cdac)",
+          }}
           disabled={props.isLoading}
         >
-          {props.isLoading ? 'Loading...' : 'Search'}
+          {props.isLoading ? "Loading..." : "Search"}
         </Button>
       </form>
       <Stack
         direction="row"
-        align="right"
         spacing={2}
-        sx={{ ml: "3%", pt: "3%" }}
+        sx={{ ml: "3%", pt: "3%", display: "flex" }}
+        alignItems="center"
+        justifyContent="center"
       >
-        <Button
+        {/*<Button
           variant="contained"
           sx={{ bgcolor: "black", fontWeight: "bold", borderRadius: "10px" }}
           onClick={handleSelectAll}
@@ -162,7 +157,7 @@ const Search = (props) => {
           onClick={handleShipClick}
         >
           Ship
-        </Button>
+        </Button>*/}
         <span style={{ display: "flex", "align-items": "center" }}>
           {props.pdfItems.filter((item) => item.Checked !== false).length}{" "}
           Order(s) Selected | {props.pdfItems.length} Order(s) Total

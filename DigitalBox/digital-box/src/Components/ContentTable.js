@@ -73,7 +73,11 @@ const ContentTable = (props) => {
         }}
       >
         <Table sx={{ whiteSpace: "normal", borderColor: "grey" }}>
-          <TableHead sx={{ bgcolor: "black" }}>
+          <TableHead
+            style={{
+              background: "linear-gradient(to right bottom, #02aab0, #00cdac)",
+            }}
+          >
             <TableRow sx={{ border: 2, whiteSpace: "normal" }}>
               <TableCell
                 sx={{ border: 2, borderColor: "black" }}

@@ -3,6 +3,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import IconButton from "@mui/material/IconButton";
 
 const NavBar = (props) => {
   const handleTroubleshootClick = () => {
@@ -15,7 +17,12 @@ const NavBar = (props) => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ "background-color": "black" }}>
+      <AppBar
+        position="static"
+        style={{
+          background: "linear-gradient(to right bottom, #02aab0, #00cdac)",
+        }}
+      >
         <Toolbar>
           <Typography
             variant="h6"
@@ -30,7 +37,7 @@ const NavBar = (props) => {
               size="small"
               color="success"
               onClick={handleHomeClick}
-              sx={{position: "absolute"}}
+              sx={{ position: "absolute" }}
             >
               Back Home
             </Button>
@@ -40,7 +47,7 @@ const NavBar = (props) => {
               size="small"
               color="error"
               onClick={handleTroubleshootClick}
-              sx={{position: "absolute"}}
+              sx={{ position: "absolute" }}
             >
               Troubleshoot
             </Button>

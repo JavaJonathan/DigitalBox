@@ -1,4 +1,9 @@
-export async function cancelOrders(setPdfItems, setMessage, orders, setAuthToken) {
+export async function cancelOrders(
+  setPdfItems,
+  setMessage,
+  orders,
+  setAuthToken
+) {
   let responseBody = "";
 
   await fetch("http://localhost:2020/cancel", {
@@ -19,11 +24,16 @@ export async function cancelOrders(setPdfItems, setMessage, orders, setAuthToken
       console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
-      setAuthToken(responseBody.Token.token)
+      setAuthToken(responseBody.Token.token);
     });
 }
 
-export async function shipOrders(setPdfItems, setMessage, orders, setAuthToken) {
+export async function shipOrders(
+  setPdfItems,
+  setMessage,
+  orders,
+  setAuthToken
+) {
   let responseBody = "";
 
   await fetch("http://localhost:2020/ship", {
@@ -47,10 +57,16 @@ export async function shipOrders(setPdfItems, setMessage, orders, setAuthToken) 
     });
 }
 
-export async function getFileContent(setPdfItems, setMessage, searchValue, setIsLoading, setAuthToken) {
+export async function searchOrders(
+  setPdfItems,
+  setMessage,
+  searchValue,
+  setIsLoading,
+  setAuthToken
+) {
   let responseBody = "";
 
-  await fetch("http://localhost:2020/", {
+  await fetch("http://localhost:2020/search", {
     method: "POST",
     headers: {
       "content-type": "text/plain",
@@ -68,6 +84,6 @@ export async function getFileContent(setPdfItems, setMessage, searchValue, setIs
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
       setIsLoading(false);
-      setAuthToken(responseBody.Token.token)
+      setAuthToken(responseBody.Token.token);
     });
 }

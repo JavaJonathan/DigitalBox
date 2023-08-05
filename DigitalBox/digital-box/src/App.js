@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { Fragment, useEffect, useState } from "react";
-import * as GoogleApi from "./Components/GoogleApi";
+import * as HttpHelper from "./Components/HttpHelper";
 import NavBar from "./Components/NavBar";
 import AlertUI from "./Components/Alert";
 import ContentTable from "./Components/ContentTable";
@@ -10,7 +10,8 @@ import Search from "./Components/Search";
 import "@fontsource/alfa-slab-one";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Help from "./Components/Help";
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from "@react-oauth/google";
+import ButtonContainer from "./Components/ButtonContainer";
 
 function App() {
   const [pdfItems, setPdfItems] = useState([]);
@@ -24,35 +25,51 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-     let token = localStorage.getItem("DigitalBoxToken")
+    let token = localStorage.getItem("DigitalBoxToken");
 
-     if(token) {
-       setSignedIn(true)
-     }
+    if (token) {
+      setSignedIn(true);
+    }
   }, []);
 
   useEffect(() => {
-    if(authToken !== "") localStorage.setItem("DigitalBoxToken", authToken)
- }, [authToken]);
+    if (authToken !== "") localStorage.setItem("DigitalBoxToken", authToken);
+  }, [authToken]);
 
-  useEffect(() => { if(signedIn) handleGetFileContent() }, [searchCount]);
+  useEffect(() => {
+    if (signedIn) handleSearch();
+  }, [searchCount]);
 
   const login = useGoogleLogin({
-    onSuccess: tokenResponse => 
-    {
+    scope:
+      "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.appfolder https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.resource https://www.googleapis.com/auth/drive.metadata https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/drive.photos.readonly https://www.googleapis.com/auth/drive.readonly",
+    onSuccess: (tokenResponse) => {
       console.log(tokenResponse);
-      localStorage.setItem("DigitalBoxToken", `${tokenResponse.access_token}`) 
-      setSignedIn(true); 
+      localStorage.setItem("DigitalBoxToken", `${tokenResponse.access_token}`);
+      setSignedIn(true);
     },
   });
 
-  const handleGetFileContent = () => {
-    GoogleApi.getFileContent(setPdfItems, setMessage, searchValue, setIsLoading, setAuthToken);
+  const handleSearch = () => {
+    HttpHelper.searchOrders(
+      setPdfItems,
+      setMessage,
+      searchValue,
+      setIsLoading,
+      setAuthToken
+    );
   };
 
   return (
     <div className="App">
-      <GlobalStyles styles={{ body: { "font-family": "Alfa Slab One" } }} />
+      <GlobalStyles
+        styles={{
+          body: {
+            "font-family":
+              "Alfa Slab One" /*, "background": 'linear-gradient(to right bottom, #414141, #000000)'*/,
+          },
+        }}
+      />
       {signedIn ? (
         <Fragment>
           <NavBar setHelp={setHelp} help={help} />
@@ -61,11 +78,15 @@ function App() {
           ) : (
             <Fragment>
               {message !== "" ? (
-                <AlertUI propMessage={message} setMessage={setMessage} setSignedIn={setSignedIn} />
+                <AlertUI
+                  propMessage={message}
+                  setMessage={setMessage}
+                  setSignedIn={setSignedIn}
+                />
               ) : null}
               <Search
                 pdfItems={pdfItems}
-                handleGetFileContent={handleGetFileContent}
+                handleSearch={handleSearch}
                 setPdfItems={setPdfItems}
                 setSearchValue={setSearchValue}
                 setMessage={setMessage}
@@ -76,6 +97,7 @@ function App() {
                 isLoading={isLoading}
                 setAuthToken={setAuthToken}
               />
+              <ButtonContainer />
               <ContentTable
                 pdfItems={pdfItems}
                 setPdfItems={setPdfItems}
