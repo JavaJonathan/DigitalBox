@@ -23,6 +23,7 @@ function App() {
   const [help, setHelp] = useState(false);
   const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [sortedByTitle, setSortedByTitle] = useState(false);
 
   useEffect(() => {
     let token = localStorage.getItem("DigitalBoxToken");
@@ -60,13 +61,48 @@ function App() {
     );
   };
 
+  const handleRefreshOrders = () => {
+    HttpHelper.refreshOrders(
+      setPdfItems,
+      setMessage,
+      searchValue,
+      setIsLoading,
+      setAuthToken
+    );
+  };
+
+  const handleSortClick = () => {
+    console.log(pdfItems);
+    if (sortedByTitle) {
+      setPdfItems((pdfItems) => [
+        ...pdfItems.sort(
+          (a, b) =>
+            Date.parse(a.FileContents[0].ShipDate) -
+            Date.parse(b.FileContents[0].ShipDate)
+        ),
+      ]);
+      setSortedByTitle(false);
+    } else {
+      setPdfItems((pdfItems) => [
+        ...pdfItems.sort(
+          (a, b) =>
+            a.FileContents[0].Title.localeCompare(b.FileContents[0].Title) ||
+            Date.parse(a.FileContents[0].ShipDate) -
+              Date.parse(b.FileContents[0].ShipDate)
+        ),
+      ]);
+      setSortedByTitle(true);
+    }
+  };
+
   return (
     <div className="App">
       <GlobalStyles
         styles={{
           body: {
-            "font-family":
-              "Alfa Slab One" /*, "background": 'linear-gradient(to right bottom, #414141, #000000)'*/,
+            "font-family": "Alfa Slab One",
+            background:
+              "linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(67,67,68,1) 42%, rgba(0,0,0,1) 100%)",
           },
         }}
       />
@@ -87,23 +123,27 @@ function App() {
               <Search
                 pdfItems={pdfItems}
                 handleSearch={handleSearch}
-                setPdfItems={setPdfItems}
                 setSearchValue={setSearchValue}
-                setMessage={setMessage}
-                page={page}
                 searchCount={searchCount}
                 setSearchCount={setSearchCount}
                 setIsLoading={setIsLoading}
                 isLoading={isLoading}
-                setAuthToken={setAuthToken}
               />
-              <ButtonContainer />
+              <ButtonContainer
+                page={page}
+                pdfItems={pdfItems}
+                setAuthToken={setAuthToken}
+                setMessage={setMessage}
+                setPdfItems={setPdfItems}
+                handleRefreshOrders={handleRefreshOrders}
+              />
               <ContentTable
                 pdfItems={pdfItems}
                 setPdfItems={setPdfItems}
                 page={page}
                 setPage={setPage}
                 searchCount={searchCount}
+                handleSortClick={handleSortClick}
               />
             </Fragment>
           )}

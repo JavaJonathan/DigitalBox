@@ -87,3 +87,34 @@ export async function searchOrders(
       setAuthToken(responseBody.Token.token);
     });
 }
+
+export async function refreshOrders(
+  setPdfItems,
+  setMessage,
+  searchValue,
+  setIsLoading,
+  setAuthToken
+) {
+  let responseBody = "";
+
+  await fetch("http://localhost:2020/", {
+    method: "POST",
+    headers: {
+      "content-type": "text/plain",
+    },
+    body: JSON.stringify({
+      token: {
+        access_token: localStorage.getItem("DigitalBoxToken"),
+      },
+      Filter: searchValue,
+    }),
+  })
+    .then((response) => response.json().then((r) => (responseBody = r)))
+    .then(() => {
+      console.log(responseBody);
+      setMessage(responseBody.Message);
+      setPdfItems(responseBody.Orders);
+      setIsLoading(false);
+      setAuthToken(responseBody.Token.token);
+    });
+}

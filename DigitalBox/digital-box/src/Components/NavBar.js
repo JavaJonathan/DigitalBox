@@ -20,7 +20,7 @@ const NavBar = (props) => {
       <AppBar
         position="static"
         style={{
-          background: "linear-gradient(to right bottom, #02aab0, #00cdac)",
+          background: "linear-gradient(to right bottom, #000428, #004e92)",
         }}
       >
         <Toolbar>

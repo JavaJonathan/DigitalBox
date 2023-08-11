@@ -14,8 +14,18 @@ import Stack from "@mui/material/Stack";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import IconButton from "@mui/material/IconButton";
 import Switch from "@mui/material/Switch";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { green } from "@mui/material/colors";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { Box } from "@mui/material";
 
 const ContentTable = (props) => {
+  const theme = createTheme({
+    palette: {
+      primary: green,
+    },
+  });
+
   const [pageCount, setPageCount] = useState(1);
 
   const handleSelected = (event) => {
@@ -59,7 +69,7 @@ const ContentTable = (props) => {
   };
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <TableContainer
         component={Paper}
         sx={{
@@ -75,7 +85,7 @@ const ContentTable = (props) => {
         <Table sx={{ whiteSpace: "normal", borderColor: "grey" }}>
           <TableHead
             style={{
-              background: "linear-gradient(to right bottom, #02aab0, #00cdac)",
+              background: "linear-gradient(to right bottom, #000428, #004e92)",
             }}
           >
             <TableRow sx={{ border: 2, whiteSpace: "normal" }}>
@@ -89,9 +99,14 @@ const ContentTable = (props) => {
               <TableCell
                 sx={{ border: 2, borderColor: "black" }}
                 align="center"
+                justifyContent="center"
+                alignItems="center"
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
               >
                 Title
+                <Box component="span" sx={{ align: "center" }}>
+                  <KeyboardArrowDownIcon onClick={props.handleSortClick} />
+                </Box>
               </TableCell>
               <TableCell
                 sx={{ border: 2, borderColor: "black" }}
@@ -184,9 +199,12 @@ const ContentTable = (props) => {
           size="large"
           page={props.page}
           onChange={handleChange}
+          color="primary"
+          variant="outlined"
+          sx={{ color: "white" }}
         />
       </Stack>
-    </>
+    </ThemeProvider>
   );
 };
 
