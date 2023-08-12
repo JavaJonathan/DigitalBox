@@ -7,12 +7,12 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import IconButton from "@mui/material/IconButton";
 
 const NavBar = (props) => {
-  const handleTroubleshootClick = () => {
-    props.setHelp(true);
+  const handleOrderHistoryClick = () => {
+    props.setOrderHistory(true);
   };
 
   const handleHomeClick = () => {
-    props.setHelp(false);
+    props.setOrderHistory(false);
   };
 
   return (
@@ -20,7 +20,7 @@ const NavBar = (props) => {
       <AppBar
         position="static"
         style={{
-          background: "linear-gradient(to right bottom, #000428, #004e92)",
+          background: "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
         }}
       >
         <Toolbar>
@@ -31,7 +31,7 @@ const NavBar = (props) => {
           >
             {"<DigitalBox />"}
           </Typography>
-          {props.help ? (
+          {props.orderHistory ? (
             <Button
               variant="contained"
               size="small"
@@ -45,11 +45,10 @@ const NavBar = (props) => {
             <Button
               variant="contained"
               size="small"
-              color="error"
-              onClick={handleTroubleshootClick}
-              sx={{ position: "absolute" }}
+              onClick={handleOrderHistoryClick}
+              sx={{ position: "absolute", bgcolor: 'black', fontWeight: "bold" }}
             >
-              Troubleshoot
+              Order History
             </Button>
           )}
         </Toolbar>

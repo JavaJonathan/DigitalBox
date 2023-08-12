@@ -15,14 +15,14 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import IconButton from "@mui/material/IconButton";
 import Switch from "@mui/material/Switch";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { green } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { Box } from "@mui/material";
 
 const ContentTable = (props) => {
   const theme = createTheme({
     palette: {
-      primary: green,
+      primary: grey,
     },
   });
 
@@ -85,7 +85,7 @@ const ContentTable = (props) => {
         <Table sx={{ whiteSpace: "normal", borderColor: "grey" }}>
           <TableHead
             style={{
-              background: "linear-gradient(to right bottom, #000428, #004e92)",
+              background: "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
             }}
           >
             <TableRow sx={{ border: 2, whiteSpace: "normal" }}>

@@ -49,10 +49,8 @@ const Search = ({
             type="submit"
             variant="contained"
             endIcon={<SendIcon />}
-            sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold" }}
-            style={{
-              background: "linear-gradient(to right bottom, #000428, #004e92)",
-            }}
+            sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold", bgcolor: "black" }}
+            
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Search"}
@@ -66,7 +64,7 @@ const Search = ({
         alignItems="center"
         justifyContent="center"
       >
-        <Box component="span" sx={{ fontSize: 24, color: "white" }}>
+        <Box component="span" sx={{ fontSize: 24, color: "black" }}>
           {pdfItems.filter((item) => item.Checked !== false).length} Order(s)
           Selected | {pdfItems.length} Order(s) Total
         </Box>

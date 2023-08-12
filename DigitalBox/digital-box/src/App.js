@@ -9,18 +9,19 @@ import Button from "@mui/material/Button";
 import Search from "./Components/Search";
 import "@fontsource/alfa-slab-one";
 import GlobalStyles from "@mui/material/GlobalStyles";
-import Help from "./Components/Help";
+import OrderHistory from "./Components/OrderHistory";
 import { useGoogleLogin } from "@react-oauth/google";
 import ButtonContainer from "./Components/ButtonContainer";
 
 function App() {
+  //state defined in App.js is gloabl and passed via props, we could use this opportunity to implement the Redux pattern
   const [pdfItems, setPdfItems] = useState([]);
   const [authToken, setAuthToken] = useState("");
   const [signedIn, setSignedIn] = useState(false);
   const [message, setMessage] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
-  const [help, setHelp] = useState(false);
+  const [orderHistory, setOrderHistory] = useState(false);
   const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [sortedByTitle, setSortedByTitle] = useState(false);
@@ -53,6 +54,26 @@ function App() {
 
   const handleSearch = () => {
     HttpHelper.searchOrders(
+      setPdfItems,
+      setMessage,
+      searchValue,
+      setIsLoading,
+      setAuthToken
+    );
+  };
+
+  const handleCanceledSearch = () => {
+    HttpHelper.searchCanceledOrders(
+      setPdfItems,
+      setMessage,
+      searchValue,
+      setIsLoading,
+      setAuthToken
+    );
+  };
+
+  const handleShippedSearch = () => {
+    HttpHelper.searchShippedOrders(
       setPdfItems,
       setMessage,
       searchValue,
@@ -101,16 +122,30 @@ function App() {
         styles={{
           body: {
             "font-family": "Alfa Slab One",
-            background:
-              "linear-gradient(90deg, rgba(249,249,249,1) 0%, rgba(67,67,68,1) 42%, rgba(0,0,0,1) 100%)",
+            // background: "linear-gradient(180deg, rgba(249,249,249,1) 8%, rgba(220,220,220,1) 29%, rgba(91,123,197,1) 100%)",
+            
           },
         }}
       />
       {signedIn ? (
         <Fragment>
-          <NavBar setHelp={setHelp} help={help} />
-          {help ? (
-            <Help />
+          <NavBar setOrderHistory={setOrderHistory} orderHistory={orderHistory} />
+          {orderHistory ? (
+            <OrderHistory 
+              pdfItems={pdfItems}
+              setPdfItems={setPdfItems}
+              page={page}
+              setPage={setPage}
+              searchCount={searchCount}
+              handleSortClick={handleSortClick}
+              setSearchCount={setSearchCount}
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
+              setSearchValue={setSearchValue}
+              handleSearch={handleSearch}
+              handleCanceledSearch={handleCanceledSearch}
+              handleShippedSearch={handleShippedSearch}
+            />
           ) : (
             <Fragment>
               {message !== "" ? (
