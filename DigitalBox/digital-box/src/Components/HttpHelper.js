@@ -97,7 +97,7 @@ export async function searchShippedOrders(
 ) {
   let responseBody = "";
 
-  await fetch("http://localhost:2020/search", {
+  await fetch("http://localhost:2020/shippedOrders", {
     method: "POST",
     headers: {
       "content-type": "text/plain",
@@ -128,7 +128,7 @@ export async function searchCanceledOrders(
 ) {
   let responseBody = "";
 
-  await fetch("http://localhost:2020/search", {
+  await fetch("http://localhost:2020/canceledOrders", {
     method: "POST",
     headers: {
       "content-type": "text/plain",

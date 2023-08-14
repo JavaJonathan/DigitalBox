@@ -19,10 +19,13 @@ const Search = ({
   handleSearch,
   searchCount,
   isLoading,
+  tabValue
 }) => {
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => handleSearch(searchText), []);
+
+ // useEffect(() => handleSearch(searchText), [tabValue]);
 
   const handleSearchClick = (e) => {
     e.preventDefault();

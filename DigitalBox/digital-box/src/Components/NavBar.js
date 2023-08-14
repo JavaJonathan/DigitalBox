@@ -3,8 +3,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import IconButton from "@mui/material/IconButton";
 
 const NavBar = (props) => {
   const handleOrderHistoryClick = () => {
