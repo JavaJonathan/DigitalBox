@@ -19,10 +19,8 @@ function App() {
   const [authToken, setAuthToken] = useState("");
   const [signedIn, setSignedIn] = useState(false);
   const [message, setMessage] = useState("");
-  const [searchValue, setSearchValue] = useState("");
   const [page, setPage] = useState(1);
   const [orderHistory, setOrderHistory] = useState(false);
-  const [searchCount, setSearchCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [sortedByTitle, setSortedByTitle] = useState(false);
 
@@ -38,10 +36,6 @@ function App() {
     if (authToken !== "") localStorage.setItem("DigitalBoxToken", authToken);
   }, [authToken]);
 
-  useEffect(() => {
-    if (signedIn) handleSearch();
-  }, [searchCount]);
-
   const login = useGoogleLogin({
     scope:
       "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.appfolder https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.resource https://www.googleapis.com/auth/drive.metadata https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/drive.photos.readonly https://www.googleapis.com/auth/drive.readonly",
@@ -52,7 +46,7 @@ function App() {
     },
   });
 
-  const handleSearch = () => {
+  const handleSearch = (searchValue) => {
     HttpHelper.searchOrders(
       setPdfItems,
       setMessage,
@@ -60,9 +54,10 @@ function App() {
       setIsLoading,
       setAuthToken
     );
+    setPage(1);
   };
 
-  const handleCanceledSearch = () => {
+  const handleCanceledSearch = (searchValue) => {
     HttpHelper.searchCanceledOrders(
       setPdfItems,
       setMessage,
@@ -70,9 +65,10 @@ function App() {
       setIsLoading,
       setAuthToken
     );
+    setPage(1);
   };
 
-  const handleShippedSearch = () => {
+  const handleShippedSearch = (searchValue) => {
     HttpHelper.searchShippedOrders(
       setPdfItems,
       setMessage,
@@ -80,20 +76,20 @@ function App() {
       setIsLoading,
       setAuthToken
     );
+    setPage(1);
   };
 
   const handleRefreshOrders = () => {
     HttpHelper.refreshOrders(
       setPdfItems,
       setMessage,
-      searchValue,
+      "",
       setIsLoading,
       setAuthToken
     );
   };
 
   const handleSortClick = () => {
-    console.log(pdfItems);
     if (sortedByTitle) {
       setPdfItems((pdfItems) => [
         ...pdfItems.sort(
@@ -123,29 +119,38 @@ function App() {
           body: {
             "font-family": "Alfa Slab One",
             // background: "linear-gradient(180deg, rgba(249,249,249,1) 8%, rgba(220,220,220,1) 29%, rgba(91,123,197,1) 100%)",
-            
           },
         }}
       />
       {signedIn ? (
         <Fragment>
-          <NavBar setOrderHistory={setOrderHistory} orderHistory={orderHistory} />
+          <NavBar
+            setOrderHistory={setOrderHistory}
+            orderHistory={orderHistory}
+          />
           {orderHistory ? (
-            <OrderHistory 
-              pdfItems={pdfItems}
-              setPdfItems={setPdfItems}
-              page={page}
-              setPage={setPage}
-              searchCount={searchCount}
-              handleSortClick={handleSortClick}
-              setSearchCount={setSearchCount}
-              setIsLoading={setIsLoading}
-              isLoading={isLoading}
-              setSearchValue={setSearchValue}
-              handleSearch={handleSearch}
-              handleCanceledSearch={handleCanceledSearch}
-              handleShippedSearch={handleShippedSearch}
-            />
+            <Fragment>
+              {message !== "" ? (
+                <AlertUI
+                  propMessage={message}
+                  setMessage={setMessage}
+                  setSignedIn={setSignedIn}
+                />
+              ) : null}
+              <OrderHistory
+                pdfItems={pdfItems}
+                setPdfItems={setPdfItems}
+                page={page}
+                setPage={setPage}
+                handleSortClick={handleSortClick}
+                setIsLoading={setIsLoading}
+                isLoading={isLoading}
+                handleSearch={handleSearch}
+                handleCanceledSearch={handleCanceledSearch}
+                handleShippedSearch={handleShippedSearch}
+                sortedByTitle={sortedByTitle}
+              />
+            </Fragment>
           ) : (
             <Fragment>
               {message !== "" ? (
@@ -158,11 +163,9 @@ function App() {
               <Search
                 pdfItems={pdfItems}
                 handleSearch={handleSearch}
-                setSearchValue={setSearchValue}
-                searchCount={searchCount}
-                setSearchCount={setSearchCount}
                 setIsLoading={setIsLoading}
                 isLoading={isLoading}
+                renderSelected={true}
               />
               <ButtonContainer
                 page={page}
@@ -177,8 +180,9 @@ function App() {
                 setPdfItems={setPdfItems}
                 page={page}
                 setPage={setPage}
-                searchCount={searchCount}
                 handleSortClick={handleSortClick}
+                renderSwitch={true}
+                sortedByTitle={sortedByTitle}
               />
             </Fragment>
           )}
@@ -195,6 +199,7 @@ function App() {
             "font-size": "72px",
             "flex-direction": "column",
             "padding-bottom": "20px",
+            "background": "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)"
           }}
         >
           {"<Digital Box />"}

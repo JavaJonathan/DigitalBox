@@ -18,7 +18,8 @@ const NavBar = (props) => {
       <AppBar
         position="static"
         style={{
-          background: "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
+          background:
+            "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
         }}
       >
         <Toolbar>
@@ -35,7 +36,11 @@ const NavBar = (props) => {
               size="small"
               color="success"
               onClick={handleHomeClick}
-              sx={{ position: "absolute" }}
+              sx={{
+                position: "absolute",
+                bgcolor: "black",
+                fontWeight: "bold",
+              }}
             >
               Back Home
             </Button>
@@ -44,7 +49,11 @@ const NavBar = (props) => {
               variant="contained"
               size="small"
               onClick={handleOrderHistoryClick}
-              sx={{ position: "absolute", bgcolor: 'black', fontWeight: "bold" }}
+              sx={{
+                position: "absolute",
+                bgcolor: "black",
+                fontWeight: "bold",
+              }}
             >
               Order History
             </Button>

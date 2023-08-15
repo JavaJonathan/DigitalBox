@@ -17,6 +17,8 @@ import Switch from "@mui/material/Switch";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyBoardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
 import { Box } from "@mui/material";
 
 const ContentTable = (props) => {
@@ -54,10 +56,6 @@ const ContentTable = (props) => {
     props.setPdfItems([...newPdfItems]);
   }, [props.page]);
 
-  useEffect(() => {
-    props.setPage(1);
-  }, [props.searchCount]);
-
   const getAmountOfPages = () => {
     let pages = 0;
     if (props.pdfItems.length % 25 > 0) {
@@ -85,38 +83,37 @@ const ContentTable = (props) => {
         <Table sx={{ whiteSpace: "normal", borderColor: "grey" }}>
           <TableHead
             style={{
-              background: "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
+              background:
+                "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
             }}
           >
             <TableRow sx={{ border: 2, whiteSpace: "normal" }}>
               <TableCell
-                sx={{ border: 2, borderColor: "black" }}
+                sx={{ border: 2 }}
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
                 className="cell"
               >
                 Order Number
               </TableCell>
               <TableCell
-                sx={{ border: 2, borderColor: "black" }}
-                align="center"
-                justifyContent="center"
-                alignItems="center"
+                sx={{ border: 2 }}
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
+                align="center"
               >
                 Title
-                <Box component="span" sx={{ align: "center" }}>
-                  <KeyboardArrowDownIcon onClick={props.handleSortClick} />
+                <Box component="span" sx={{display: 'flex', justifyContent:"center"}}>
+                  { props.sortedByTitle ? <KeyBoardArrowUpIcon onClick={props.handleSortClick} /> : <KeyboardArrowDownIcon onClick={props.handleSortClick} /> }
                 </Box>
               </TableCell>
               <TableCell
-                sx={{ border: 2, borderColor: "black" }}
+                sx={{ border: 2 }}
                 align="center"
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
               >
                 Quantity
               </TableCell>
               <TableCell
-                sx={{ border: 2, borderColor: "black" }}
+                sx={{ border: 2 }}
                 align="center"
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
               >
@@ -147,12 +144,14 @@ const ContentTable = (props) => {
                               "font-size": "15px",
                             }}
                           >
-                            <Switch
-                              value={row.FileId}
-                              checked={row.Checked}
-                              onClick={handleSelected}
-                              color="success"
-                            ></Switch>
+                            {props.renderSwitch ? (
+                              <Switch
+                                value={row.FileId}
+                                checked={row.Checked}
+                                onClick={handleSelected}
+                                color="success"
+                              ></Switch>
+                            ) : null}
                           </div>
                           {row.FileContents[0].OrderNumber}
                         </TableCell>

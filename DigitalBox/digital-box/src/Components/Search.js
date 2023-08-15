@@ -5,33 +5,28 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Fragment, useEffect, useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import LocalShippingIcon from "@mui/icons-material/LocalShipping";
-import CancelScheduleSendIcon from "@mui/icons-material/CancelScheduleSend";
 import SendIcon from "@mui/icons-material/Send";
-import * as GoogleApi from "./HttpHelper";
 import { Box } from "@mui/material";
 
 const Search = ({
-  setSearchValue,
-  setSearchCount,
   setIsLoading,
   pdfItems,
   handleSearch,
-  searchCount,
   isLoading,
-  tabValue
+  renderSelected,
+  tabValue,
 }) => {
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => handleSearch(searchText), []);
-
- // useEffect(() => handleSearch(searchText), [tabValue]);
+  useEffect(() => {
+    setSearchText("");
+    handleSearch(searchText);
+  }, []);
 
   const handleSearchClick = (e) => {
     e.preventDefault();
-    setSearchValue(searchText);
-    setSearchCount(searchCount + 1);
     setIsLoading(true);
+    handleSearch(searchText);
   };
 
   return (
@@ -53,7 +48,6 @@ const Search = ({
             variant="contained"
             endIcon={<SendIcon />}
             sx={{ ml: "1vh", mb: "1vh", fontWeight: "bold", bgcolor: "black" }}
-            
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Search"}
@@ -63,14 +57,20 @@ const Search = ({
       <Stack
         direction="row"
         spacing={2}
-        sx={{ ml: "3%", pt: "1%", display: "flex", pb: "1%" }}
+        sx={{ pt: "1%", display: "flex", pb: "1%" }}
         alignItems="center"
         justifyContent="center"
       >
-        <Box component="span" sx={{ fontSize: 24, color: "black" }}>
-          {pdfItems.filter((item) => item.Checked !== false).length} Order(s)
-          Selected | {pdfItems.length} Order(s) Total
-        </Box>
+        {renderSelected ? (
+          <Box component="span" sx={{ fontSize: 24, color: "black" }}>
+            {pdfItems.filter((item) => item.Checked !== false).length} Order(s)
+            Selected | {pdfItems.length} Order(s) Total
+          </Box>
+        ) : (
+          <Box component="span" sx={{ fontSize: 24, color: "black" }}>
+            {pdfItems.length} {tabValue} Order(s)
+          </Box>
+        )}
       </Stack>
     </Fragment>
   );
