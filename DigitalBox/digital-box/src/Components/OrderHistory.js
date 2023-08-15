@@ -18,7 +18,7 @@ const OrderHistory = ({
   setIsLoading,
   handleCanceledSearch,
   handleShippedSearch,
-  sortedByTitle
+  sortedByTitle,
 }) => {
   const [tabValue, setTabValue] = useState(0);
 
@@ -34,7 +34,9 @@ const OrderHistory = ({
 
   return (
     <ThemeProvider theme={theme}>
-      <Box component="div" sx={{mt:5}}>Search {tabValue === 0 ? "Shipped" : "Canceled"} Orders</Box>
+      <Box component="div" sx={{ mt: 5 }}>
+        Search {tabValue === 0 ? "Shipped" : "Canceled"} Orders
+      </Box>
       <Search
         pdfItems={pdfItems}
         handleSearch={
@@ -45,11 +47,7 @@ const OrderHistory = ({
         renderSelected={false}
         tabValue={tabValue === 0 ? "Shipped" : "Canceled"}
       />
-      <Tabs
-        value={tabValue}
-        centered
-        onChange={handleTabValueChange}
-      >
+      <Tabs value={tabValue} centered onChange={handleTabValueChange}>
         <Tab label="Shipped" sx={{ fontWeight: "bold", color: "green" }} />
         <Divider orientation="vertical" flexItem></Divider>
         <Tab label="Canceled" sx={{ fontWeight: "bold", color: "red" }} />

@@ -199,7 +199,8 @@ function App() {
             "font-size": "72px",
             "flex-direction": "column",
             "padding-bottom": "20px",
-            "background": "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)"
+            background:
+              "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
           }}
         >
           {"<Digital Box />"}
@@ -207,6 +208,7 @@ function App() {
           <Button
             onClick={login}
             variant="contained"
+            style={{ background: "black" }}
             endIcon={<GoogleIcon fontSize="large" />}
           >
             Sign In With Google

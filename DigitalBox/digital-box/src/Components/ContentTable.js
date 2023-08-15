@@ -101,8 +101,15 @@ const ContentTable = (props) => {
                 align="center"
               >
                 Title
-                <Box component="span" sx={{display: 'flex', justifyContent:"center"}}>
-                  { props.sortedByTitle ? <KeyBoardArrowUpIcon onClick={props.handleSortClick} /> : <KeyboardArrowDownIcon onClick={props.handleSortClick} /> }
+                <Box
+                  component="span"
+                  sx={{ display: "flex", justifyContent: "center" }}
+                >
+                  {props.sortedByTitle ? (
+                    <KeyBoardArrowUpIcon onClick={props.handleSortClick} />
+                  ) : (
+                    <KeyboardArrowDownIcon onClick={props.handleSortClick} />
+                  )}
                 </Box>
               </TableCell>
               <TableCell
