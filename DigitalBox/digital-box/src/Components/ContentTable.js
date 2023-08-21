@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,8 +7,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import CheckIcon from "@mui/icons-material/Check";
-import ToggleButton from "@mui/material/ToggleButton";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
@@ -16,7 +14,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyBoardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
 import { Box } from "@mui/material";
 
 const ContentTable = (props) => {
@@ -132,12 +129,12 @@ const ContentTable = (props) => {
               index > props.page * 25 - 1 || index < props.page * 25 - 25
                 ? null
                 : row.FileContents.map((item, index) => (
-                    <TableRow>
+                    <TableRow key={`item.FileId${index}`}>
                       {index === 0 ? (
                         <TableCell
                           align="center"
                           rowSpan={row.FileContents.length}
-                          style={{ padding: "15px", "font-weight": "bold" }}
+                          style={{ padding: "15px", fontWeight: "bold" }}
                           sx={{
                             bgcolor: row.Checked ? "#c7f7d4" : "",
                             borderColor: "darkgray",
@@ -146,8 +143,8 @@ const ContentTable = (props) => {
                         >
                           <div
                             style={{
-                              "padding-bottom": "2vh",
-                              "font-size": "15px",
+                              pb: "2vh",
+                              fontSize: "15px",
                             }}
                           >
                             {props.renderSwitch ? (
@@ -164,8 +161,8 @@ const ContentTable = (props) => {
                       ) : null}
                       <TableCell
                         style={{
-                          "word-break": "break-word",
-                          "background-color": "#f5f1f1",
+                          wordBreak: "break-word",
+                          backgroundColor: "#f5f1f1",
                           borderColor: "darkgray",
                         }}
                         sx={{

@@ -1,7 +1,7 @@
 import Input from "@mui/material/Input";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
-import { Fragment, useEffect, useState, useRef } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
@@ -30,7 +30,7 @@ const Search = ({
 
   return (
     <Fragment>
-      <box alignItems="center" justifyContent="center">
+      <Box alignItems="center" justifyContent="center">
         <form onSubmit={handleSearchClick}>
           <Input
             id="input-with-icon-adornment"
@@ -52,7 +52,7 @@ const Search = ({
             {isLoading ? "Loading..." : "Search"}
           </Button>
         </form>
-      </box>
+      </Box>
       <Stack
         direction="row"
         spacing={2}

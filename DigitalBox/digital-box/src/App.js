@@ -193,13 +193,13 @@ function App() {
           style={{
             display: "flex",
             flex: 1,
-            "min-height": "93vh",
-            "justify-content": "center",
-            "align-items": "center",
-            "font-family": "Alfa Slab One",
-            "font-size": "72px",
-            "flex-direction": "column",
-            "padding-bottom": "20px",
+            minHeight: "93vh",
+            justifyContent: "center",
+            alignItems: "center",
+            fontFamily: "Alfa Slab One",
+            fontSize: "72px",
+            flexDirection: "column",
+            pb: "20px",
             background:
               "linear-gradient(90deg, rgba(69,136,242,1) 12%, rgba(7,140,252,1) 46%, rgba(6,0,96,1) 94%)",
           }}
