@@ -1,11 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import NavigationIcon from "@mui/icons-material/Navigation";
-import Button from "@mui/material/Button";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -70,8 +65,6 @@ export default function ButtonContainer(props) {
       return !(index > props.page * 25 - 1 || index < props.page * 25 - 25);
     });
     let orders = [];
-
-    console.log(pagedItems);
 
     if (pagedItems.every((pagedItem) => pagedItem.Checked)) {
       orders = props.pdfItems.map((item, index) => {

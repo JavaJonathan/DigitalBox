@@ -40,7 +40,6 @@ function App() {
     scope:
       "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.appfolder https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.resource https://www.googleapis.com/auth/drive.metadata https://www.googleapis.com/auth/drive.metadata.readonly https://www.googleapis.com/auth/drive.readonly.metadata https://www.googleapis.com/auth/drive.photos.readonly https://www.googleapis.com/auth/drive.readonly",
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse);
       localStorage.setItem("DigitalBoxToken", `${tokenResponse.access_token}`);
       setSignedIn(true);
     },

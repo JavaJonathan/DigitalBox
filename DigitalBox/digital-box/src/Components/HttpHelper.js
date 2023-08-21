@@ -21,7 +21,6 @@ export async function cancelOrders(
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
       setAuthToken(responseBody.Token.token);
@@ -51,7 +50,6 @@ export async function shipOrders(
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
     });
@@ -80,7 +78,6 @@ export async function searchOrders(
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
       setIsLoading(false);
@@ -111,7 +108,6 @@ export async function searchShippedOrders(
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
       setIsLoading(false);
@@ -142,7 +138,6 @@ export async function searchCanceledOrders(
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
       setIsLoading(false);
@@ -173,7 +168,6 @@ export async function refreshOrders(
   })
     .then((response) => response.json().then((r) => (responseBody = r)))
     .then(() => {
-      console.log(responseBody);
       setMessage(responseBody.Message);
       setPdfItems(responseBody.Orders);
       setIsLoading(false);
