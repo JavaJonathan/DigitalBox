@@ -90,24 +90,26 @@ function App() {
   };
 
   const handleSortClick = () => {
+    let localPdfItems = pdfItems.map(item => { 
+      return {...item, Checked: false} 
+    })
+
     if (sortedByTitle) {
-      setPdfItems((pdfItems) => [
-        ...pdfItems.sort(
-          (a, b) =>
-            Date.parse(a.FileContents[0].ShipDate) -
-            Date.parse(b.FileContents[0].ShipDate)
-        ),
-      ]);
+      localPdfItems.sort(
+        (a, b) =>
+          Date.parse(a.FileContents[0].ShipDate) -
+          Date.parse(b.FileContents[0].ShipDate)
+      )
+      setPdfItems(localPdfItems);
       setSortedByTitle(false);
     } else {
-      setPdfItems((pdfItems) => [
-        ...pdfItems.sort(
-          (a, b) =>
-            a.FileContents[0].Title.localeCompare(b.FileContents[0].Title) ||
-            Date.parse(a.FileContents[0].ShipDate) -
-              Date.parse(b.FileContents[0].ShipDate)
-        ),
-      ]);
+      localPdfItems.sort(
+        (a, b) =>
+          a.FileContents[0].Title.localeCompare(b.FileContents[0].Title) ||
+          Date.parse(a.FileContents[0].ShipDate) -
+            Date.parse(b.FileContents[0].ShipDate)
+      )
+      setPdfItems(localPdfItems);
       setSortedByTitle(true);
     }
   };

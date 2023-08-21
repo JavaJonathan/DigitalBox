@@ -96,9 +96,10 @@ const ContentTable = (props) => {
                 Order Number
               </TableCell>
               <TableCell
-                sx={{ border: 2 }}
+                sx={{ border: 2, cursor:'pointer' }}
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
                 align="center"
+                onClick={props.handleSortClick}
               >
                 Title
                 <Box
@@ -106,9 +107,9 @@ const ContentTable = (props) => {
                   sx={{ display: "flex", justifyContent: "center" }}
                 >
                   {props.sortedByTitle ? (
-                    <KeyBoardArrowUpIcon onClick={props.handleSortClick} />
+                    <KeyBoardArrowUpIcon />
                   ) : (
-                    <KeyboardArrowDownIcon onClick={props.handleSortClick} />
+                    <KeyboardArrowDownIcon />
                   )}
                 </Box>
               </TableCell>
