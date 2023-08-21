@@ -126,6 +126,7 @@ function App() {
       {signedIn ? (
         <Fragment>
           <NavBar
+            setIsLoading={setIsLoading}
             setOrderHistory={setOrderHistory}
             orderHistory={orderHistory}
           />

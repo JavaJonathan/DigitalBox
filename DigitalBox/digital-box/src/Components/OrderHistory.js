@@ -24,6 +24,7 @@ const OrderHistory = ({
 
   const handleTabValueChange = (event, newValue) => {
     setTabValue(newValue);
+    setIsLoading(true);
     newValue === 0 ? handleShippedSearch("") : handleCanceledSearch("");
   };
   const theme = createTheme({
