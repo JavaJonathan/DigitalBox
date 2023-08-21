@@ -25,6 +25,7 @@ const OrderHistory = ({
   const handleTabValueChange = (event, newValue) => {
     setTabValue(newValue);
     setIsLoading(true);
+    setPdfItems([]);
     newValue === 0 ? handleShippedSearch("") : handleCanceledSearch("");
   };
   const theme = createTheme({
@@ -61,6 +62,7 @@ const OrderHistory = ({
         handleSortClick={handleSortClick}
         renderSwitch={false}
         sortedByTitle={sortedByTitle}
+        tabValue={tabValue}
       />
     </ThemeProvider>
   );

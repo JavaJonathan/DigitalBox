@@ -61,6 +61,31 @@ const ContentTable = (props) => {
     setPageCount(Math.floor(pages));
   };
 
+  const getColumnName = () => {
+    if(props.tabValue ===  undefined) {
+      return "Ship Date"
+    }
+    else if(props.tabValue === 0) {
+      return "Shipped On"
+    }
+    else {
+      return "Cancelled On"
+    }
+  }
+
+  const getDateColumnValue = (order, orderItem) => {
+    console.log(order);
+    if(props.tabValue ===  undefined) {
+      return orderItem.ShipDate
+    }
+    else if(props.tabValue === 0) {
+      return order.shippedOn
+    }
+    else {
+      return order.canceledOn
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <TableContainer
@@ -120,7 +145,7 @@ const ContentTable = (props) => {
                 align="center"
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
               >
-                Ship Date
+                {getColumnName()}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -129,16 +154,16 @@ const ContentTable = (props) => {
               index > props.page * 25 - 1 || index < props.page * 25 - 25
                 ? null
                 : row.FileContents.map((item, index) => (
-                    <TableRow key={`item.FileId${index}`}>
+                    <TableRow >
                       {index === 0 ? (
                         <TableCell
                           align="center"
                           rowSpan={row.FileContents.length}
-                          style={{ padding: "15px", fontWeight: "bold" }}
+                          style={{ padding: "15px", fontWeight: "bold", borderColor: '#4588f2' }}
                           sx={{
                             bgcolor: row.Checked ? "#c7f7d4" : "",
-                            borderColor: "darkgray",
                             pl: "1vh",
+                            border: 1
                           }}
                         >
                           <div
@@ -162,11 +187,11 @@ const ContentTable = (props) => {
                       <TableCell
                         style={{
                           wordBreak: "break-word",
-                          backgroundColor: "#f5f1f1",
                           borderColor: "darkgray",
                         }}
                         sx={{
                           p: "1vh",
+                          bgcolor: row.Checked ? "#c7f7d4" : "#f5f1f1"
                         }}
                       >
                         <span style={{ fontWeight: "bold" }}>
@@ -176,7 +201,7 @@ const ContentTable = (props) => {
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ borderColor: "darkgray" }}
+                        sx={{ borderColor: "darkgray", bgcolor: row.Checked ? "#c7f7d4" : "" }}
                       >
                         {item.Quantity}
                       </TableCell>
@@ -184,10 +209,10 @@ const ContentTable = (props) => {
                         align="center"
                         sx={{
                           borderColor: "darkgray",
-                          "background-color": "#f5f1f1",
+                          bgcolor: row.Checked ? "#c7f7d4" : "#f5f1f1",
                         }}
                       >
-                        {item.ShipDate}
+                        {getDateColumnValue(row, item)}
                       </TableCell>
                     </TableRow>
                   ))

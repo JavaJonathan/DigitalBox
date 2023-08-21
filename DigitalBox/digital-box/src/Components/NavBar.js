@@ -7,11 +7,13 @@ import Button from "@mui/material/Button";
 const NavBar = (props) => {
   const handleOrderHistoryClick = () => {
     props.setIsLoading(true);
+    props.setPdfItems([]);
     props.setOrderHistory(true);
   };
 
   const handleHomeClick = () => {
     props.setIsLoading(true);
+    props.setPdfItems([]);
     props.setOrderHistory(false);
   };
 

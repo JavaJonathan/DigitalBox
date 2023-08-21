@@ -129,6 +129,7 @@ function App() {
             setIsLoading={setIsLoading}
             setOrderHistory={setOrderHistory}
             orderHistory={orderHistory}
+            setPdfItems={setPdfItems}
           />
           {orderHistory ? (
             <Fragment>
@@ -194,7 +195,7 @@ function App() {
           style={{
             display: "flex",
             flex: 1,
-            minHeight: "93vh",
+            minHeight: "100vh",
             justifyContent: "center",
             alignItems: "center",
             fontFamily: "Alfa Slab One",
