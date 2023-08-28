@@ -74,7 +74,6 @@ const ContentTable = (props) => {
   }
 
   const getDateColumnValue = (order, orderItem) => {
-    console.log(order);
     if(props.tabValue ===  undefined) {
       return orderItem.ShipDate
     }
@@ -119,7 +118,7 @@ const ContentTable = (props) => {
                 sx={{ border: 2, cursor:'pointer' }}
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
                 align="center"
-                onClick={props.handleSortClick}
+                onClick={() => props.handleSortClick(props.tabValue)}
               >
                 Title
                 <Box

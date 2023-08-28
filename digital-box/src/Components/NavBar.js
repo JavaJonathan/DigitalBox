@@ -9,12 +9,14 @@ const NavBar = (props) => {
     props.setIsLoading(true);
     props.setPdfItems([]);
     props.setOrderHistory(true);
+    props.setSortedByTitle(false);
   };
 
   const handleHomeClick = () => {
     props.setIsLoading(true);
     props.setPdfItems([]);
     props.setOrderHistory(false);
+    props.setSortedByTitle(false);
   };
 
   return (

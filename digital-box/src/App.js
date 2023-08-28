@@ -88,12 +88,32 @@ function App() {
     );
   };
 
-  const handleSortClick = () => {
+  const handleSortClick = (tabValue) => {
     let localPdfItems = pdfItems.map(item => { 
       return {...item, Checked: false} 
     })
 
-    if (sortedByTitle) {
+    if (sortedByTitle && tabValue !== undefined) {
+
+      if(tabValue === 0) {
+        localPdfItems.sort(
+          (a, b) =>
+            Date.parse(b.shippedOn) -
+            Date.parse(a.shippedOn)
+        )
+      }
+      else {
+        localPdfItems.sort(
+          (a, b) =>
+            Date.parse(b.canceledOn) -
+            Date.parse(a.canceledOn)
+        )
+      }
+      setPdfItems(localPdfItems);
+      setSortedByTitle(false);
+
+    } else if(sortedByTitle && tabValue === undefined) {
+
       localPdfItems.sort(
         (a, b) =>
           Date.parse(a.FileContents[0].ShipDate) -
@@ -101,7 +121,9 @@ function App() {
       )
       setPdfItems(localPdfItems);
       setSortedByTitle(false);
+
     } else {
+
       localPdfItems.sort(
         (a, b) =>
           a.FileContents[0].Title.localeCompare(b.FileContents[0].Title) ||
@@ -110,6 +132,7 @@ function App() {
       )
       setPdfItems(localPdfItems);
       setSortedByTitle(true);
+
     }
   };
 
@@ -130,6 +153,7 @@ function App() {
             setOrderHistory={setOrderHistory}
             orderHistory={orderHistory}
             setPdfItems={setPdfItems}
+            setSortedByTitle={setSortedByTitle}
           />
           {orderHistory ? (
             <Fragment>
@@ -152,6 +176,7 @@ function App() {
                 handleCanceledSearch={handleCanceledSearch}
                 handleShippedSearch={handleShippedSearch}
                 sortedByTitle={sortedByTitle}
+                setSortedByTitle={setSortedByTitle}
               />
             </Fragment>
           ) : (
