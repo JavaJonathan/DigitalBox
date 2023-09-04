@@ -108,7 +108,7 @@ function App() {
     } else if (sortedByTitle && tabValue === undefined) {
       localPdfItems.sort(
         (a, b) => {
-        //put empty strings at the end of the list
+          
         if (a.FileContents[0].ShipDate === "") {
           return Date.parse(a.FileContents[1].ShipDate) -
           Date.parse(b.FileContents[0].ShipDate)
