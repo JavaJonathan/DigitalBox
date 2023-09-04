@@ -89,50 +89,55 @@ function App() {
   };
 
   const handleSortClick = (tabValue) => {
-    let localPdfItems = pdfItems.map(item => { 
-      return {...item, Checked: false} 
-    })
+    let localPdfItems = pdfItems.map((item) => {
+      return { ...item, Checked: false };
+    });
 
     if (sortedByTitle && tabValue !== undefined) {
-
-      if(tabValue === 0) {
+      if (tabValue === 0) {
         localPdfItems.sort(
-          (a, b) =>
-            Date.parse(b.shippedOn) -
-            Date.parse(a.shippedOn)
-        )
-      }
-      else {
+          (a, b) => Date.parse(b.shippedOn) - Date.parse(a.shippedOn)
+        );
+      } else {
         localPdfItems.sort(
-          (a, b) =>
-            Date.parse(b.canceledOn) -
-            Date.parse(a.canceledOn)
-        )
+          (a, b) => Date.parse(b.canceledOn) - Date.parse(a.canceledOn)
+        );
       }
       setPdfItems(localPdfItems);
       setSortedByTitle(false);
-
-    } else if(sortedByTitle && tabValue === undefined) {
-
+    } else if (sortedByTitle && tabValue === undefined) {
       localPdfItems.sort(
-        (a, b) =>
-          Date.parse(a.FileContents[0].ShipDate) -
+        (a, b) => {
+        //put empty strings at the end of the list
+        if (a.FileContents[0].ShipDate === "") {
+          return Date.parse(a.FileContents[1].ShipDate) -
           Date.parse(b.FileContents[0].ShipDate)
-      )
+        }
+        
+          return Date.parse(a.FileContents[0].ShipDate) -
+          Date.parse(b.FileContents[0].ShipDate)
+        }
+      );
       setPdfItems(localPdfItems);
       setSortedByTitle(false);
-
     } else {
+      localPdfItems.sort((a, b) => {
+        //put empty strings at the end of the list
+        if (a.FileContents[0].ShipDate === "") {
+          return 1;
+        }
+        if (b.FileContents[0].ShipDate === "") {
+          return -1;
+        }
 
-      localPdfItems.sort(
-        (a, b) =>
+        return (
           a.FileContents[0].Title.localeCompare(b.FileContents[0].Title) ||
           Date.parse(a.FileContents[0].ShipDate) -
             Date.parse(b.FileContents[0].ShipDate)
-      )
+        );
+      });
       setPdfItems(localPdfItems);
       setSortedByTitle(true);
-
     }
   };
 
@@ -141,8 +146,7 @@ function App() {
       <GlobalStyles
         styles={{
           body: {
-            "font-family": "Alfa Slab One",
-            // background: "linear-gradient(180deg, rgba(249,249,249,1) 8%, rgba(220,220,220,1) 29%, rgba(91,123,197,1) 100%)",
+            "font-family": "Alfa Slab One"
           },
         }}
       />

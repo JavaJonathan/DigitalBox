@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import SendIcon from "@mui/icons-material/Send";
 import { Box } from "@mui/material";
-import LinearProgress from '@mui/material/LinearProgress';
+import LinearProgress from "@mui/material/LinearProgress";
 
 const Search = ({
   setIsLoading,
@@ -61,11 +61,11 @@ const Search = ({
         alignItems="center"
         justifyContent="center"
       >
-        { isLoading ? 
-          <Box component="span" sx={{ width: '100%' }}>
+        {isLoading ? (
+          <Box component="span" sx={{ width: "100%" }}>
             <LinearProgress />
           </Box>
-          : renderSelected ? (
+        ) : renderSelected ? (
           <Box component="span" sx={{ fontSize: 24, color: "black" }}>
             {pdfItems.filter((item) => item.Checked !== false).length} Order(s)
             Selected | {pdfItems.length} Order(s) Total

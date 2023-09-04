@@ -62,28 +62,24 @@ const ContentTable = (props) => {
   };
 
   const getColumnName = () => {
-    if(props.tabValue ===  undefined) {
-      return "Ship Date"
+    if (props.tabValue === undefined) {
+      return "Ship Date";
+    } else if (props.tabValue === 0) {
+      return "Shipped On";
+    } else {
+      return "Cancelled On";
     }
-    else if(props.tabValue === 0) {
-      return "Shipped On"
-    }
-    else {
-      return "Cancelled On"
-    }
-  }
+  };
 
   const getDateColumnValue = (order, orderItem) => {
-    if(props.tabValue ===  undefined) {
-      return orderItem.ShipDate
+    if (props.tabValue === undefined) {
+      return orderItem.ShipDate;
+    } else if (props.tabValue === 0) {
+      return order.shippedOn;
+    } else {
+      return order.canceledOn;
     }
-    else if(props.tabValue === 0) {
-      return order.shippedOn
-    }
-    else {
-      return order.canceledOn
-    }
-  }
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -115,7 +111,7 @@ const ContentTable = (props) => {
                 Order Number
               </TableCell>
               <TableCell
-                sx={{ border: 2, cursor:'pointer' }}
+                sx={{ border: 2, cursor: "pointer" }}
                 style={{ color: "white", fontFamily: "Alfa Slab One" }}
                 align="center"
                 onClick={() => props.handleSortClick(props.tabValue)}
@@ -153,16 +149,20 @@ const ContentTable = (props) => {
               index > props.page * 25 - 1 || index < props.page * 25 - 25
                 ? null
                 : row.FileContents.map((item, index) => (
-                    <TableRow >
+                    <TableRow>
                       {index === 0 ? (
                         <TableCell
                           align="center"
                           rowSpan={row.FileContents.length}
-                          style={{ padding: "15px", fontWeight: "bold", borderColor: '#4588f2' }}
+                          style={{
+                            padding: "15px",
+                            fontWeight: "bold",
+                            borderColor: "#4588f2",
+                          }}
                           sx={{
                             bgcolor: row.Checked ? "#c7f7d4" : "",
                             pl: "1vh",
-                            border: 1
+                            border: 1,
                           }}
                         >
                           <div
@@ -190,7 +190,7 @@ const ContentTable = (props) => {
                         }}
                         sx={{
                           p: "1vh",
-                          bgcolor: row.Checked ? "#c7f7d4" : "#f5f1f1"
+                          bgcolor: row.Checked ? "#c7f7d4" : "#f5f1f1",
                         }}
                       >
                         <span style={{ fontWeight: "bold" }}>
@@ -200,7 +200,10 @@ const ContentTable = (props) => {
                       </TableCell>
                       <TableCell
                         align="center"
-                        sx={{ borderColor: "darkgray", bgcolor: row.Checked ? "#c7f7d4" : "" }}
+                        sx={{
+                          borderColor: "darkgray",
+                          bgcolor: row.Checked ? "#c7f7d4" : "",
+                        }}
                       >
                         {item.Quantity}
                       </TableCell>

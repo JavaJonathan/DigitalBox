@@ -19,13 +19,13 @@ const OrderHistory = ({
   handleCanceledSearch,
   handleShippedSearch,
   sortedByTitle,
-  setSortedByTitle
+  setSortedByTitle,
 }) => {
   const [tabValue, setTabValue] = useState(0);
 
   const handleTabValueChange = (event, newValue) => {
-    setTabValue(newValue)
-    setSortedByTitle(false)
+    setTabValue(newValue);
+    setSortedByTitle(false);
     setIsLoading(true);
     setPdfItems([]);
     newValue === 0 ? handleShippedSearch("") : handleCanceledSearch("");
