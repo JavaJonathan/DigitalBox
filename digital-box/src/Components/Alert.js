@@ -56,6 +56,10 @@ const AlertUI = (props) => {
       setSeverityState("success");
       setOpen(true);
       setUiMessage(props.propMessage);
+    } else if (props.propMessage === "Some of your files were not downloaded. Please check the api console to see which files failed.") {
+      setSeverityState("warning");
+      setOpen(true);
+      setUiMessage(props.propMessage);
     }
   }, [props.propMessage]);
 
